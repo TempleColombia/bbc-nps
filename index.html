@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>BBC · NPS 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --t:#00B5A3;--t2:#00D4BF;--td:rgba(0,181,163,.12);--tb:rgba(0,181,163,.18);
+  --dk:#0D1117;--d2:#161B22;--d3:#1C2333;--d4:#242B38;
+  --tx:#E6EDF3;--mu:#7D8590;
+  --re:#FF4A4A;--rd:rgba(255,74,74,.1);
+  --ye:#F5A623;--yd:rgba(245,166,35,.1);
+  --gr:#3FB950;--gd:rgba(63,185,80,.1);
+  --pu:#B57BFF;
+  --fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'DM Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--dk);color:var(--tx);font-family:var(--fb);font-size:13px;line-height:1.6;}
+
+/* ── TOP BAR ── */
+.topbar{background:linear-gradient(160deg,#071018,#0D1117,#091a15);border-bottom:1px solid var(--tb);padding:18px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;position:sticky;top:0;z-index:200;backdrop-filter:blur(12px);}
+.logo{font-family:var(--fd);font-size:22px;font-weight:800;border:2.5px solid var(--t);padding:3px 8px;line-height:1;color:#fff;}
+.topbar-mid{display:flex;gap:24px;align-items:center;flex-wrap:wrap;}
+.top-kpi{text-align:center;}
+.top-kv{font-family:var(--fd);font-size:22px;font-weight:800;line-height:1;}
+.top-kl{font-family:var(--fm);font-size:9px;color:var(--mu);letter-spacing:1.5px;text-transform:uppercase;}
+.topbar-sep{width:1px;height:32px;background:var(--tb);}
+.top-period{font-family:var(--fm);font-size:10px;color:var(--mu);text-align:right;line-height:1.9;}
+.top-period span{color:var(--t);}
+
+/* ── NAV TABS ── */
+.navtabs{background:var(--d2);border-bottom:1px solid var(--tb);display:flex;overflow-x:auto;padding:0 28px;position:sticky;top:68px;z-index:190;}
+.navtab{font-family:var(--fm);font-size:10px;letter-spacing:1.2px;text-transform:uppercase;color:var(--mu);background:none;border:none;border-bottom:2px solid transparent;padding:11px 16px 13px;cursor:pointer;white-space:nowrap;transition:.15s;}
+.navtab:hover{color:var(--t);}
+.navtab.on{color:var(--t);border-bottom-color:var(--t);}
+
+/* ── SECTIONS ── */
+.sec{display:none;padding:28px 32px;animation:fi .25s ease;}
+.sec.on{display:block;}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media(max-width:768px){.sec{padding:16px;}.topbar{padding:14px 16px;}.navtabs{padding:0 10px;}}
+
+/* ── GRIDS ── */
+.g5{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;}
+.g21{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:20px;}
+@media(max-width:1000px){.g5,.g4{grid-template-columns:repeat(2,1fr);}.g3{grid-template-columns:repeat(2,1fr);}.g2,.g21{grid-template-columns:1fr;}}
+@media(max-width:600px){.g5,.g4,.g3{grid-template-columns:1fr;}}
+
+/* ── CARDS ── */
+.card{background:var(--d2);border:1px solid var(--tb);border-radius:9px;padding:16px;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--t),transparent);}
+.card.r::before{background:linear-gradient(90deg,var(--re),transparent);}
+.card.y::before{background:linear-gradient(90deg,var(--ye),transparent);}
+.card.p::before{background:linear-gradient(90deg,var(--pu),transparent);}
+.cval.p{color:var(--pu);}
+.card.p::before{background:linear-gradient(90deg,var(--pu),transparent);}
+.clbl{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--mu);margin-bottom:7px;}
+.cval{font-family:var(--fd);font-size:30px;font-weight:800;line-height:1;margin-bottom:2px;color:#fff;}
+.cval.t{color:var(--t);}.cval.r{color:var(--re);}.cval.y{color:var(--ye);}.cval.g{color:var(--gr);}
+.cval.sm{font-size:20px;}.cval.xs{font-size:15px;}
+.cdsc{font-size:11px;color:var(--mu);line-height:1.5;}
+
+/* ── SECTION TITLE ── */
+.stitle{font-family:var(--fd);font-size:17px;font-weight:700;color:#fff;margin:24px 0 14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.stitle::before{content:'';display:inline-block;width:3px;height:16px;background:var(--t);border-radius:2px;flex-shrink:0;}
+.stag{font-family:var(--fm);font-size:9px;padding:2px 7px;border-radius:3px;background:var(--td);color:var(--t);border:1px solid var(--tb);}
+
+hr.dv{border:none;border-top:1px solid var(--tb);margin:20px 0;}
+
+/* ── ZONA CARDS ── */
+.zona-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+@media(max-width:900px){.zona-cards{grid-template-columns:1fr;}}
+.zcard{background:var(--d2);border:1px solid var(--tb);border-radius:10px;overflow:hidden;}
+.zcard-head{padding:16px 18px 12px;display:flex;justify-content:space-between;align-items:flex-start;}
+.zcard-name{font-family:var(--fd);font-size:16px;font-weight:800;color:#fff;}
+.zcard-sub{font-family:var(--fm);font-size:10px;color:var(--mu);margin-top:2px;}
+.zcard-nps{font-family:var(--fd);font-size:38px;font-weight:800;line-height:1;}
+.zcard-body{padding:0 18px 14px;display:flex;flex-direction:column;gap:7px;}
+.zcard-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;}
+.zcard-lbl{color:var(--mu);}
+.zcard-val{font-family:var(--fm);font-size:11px;}
+.zcard-divider{height:1px;background:var(--tb);margin:8px 0;}
+.zcard-canal-row{display:flex;gap:10px;}
+.canal-pill{flex:1;background:var(--d3);border-radius:7px;padding:10px 12px;text-align:center;}
+.canal-pill-lbl{font-family:var(--fm);font-size:9px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.canal-pill-val{font-family:var(--fd);font-size:22px;font-weight:700;line-height:1;}
+.canal-pill-n{font-family:var(--fm);font-size:9px;color:var(--mu);margin-top:2px;}
+.zcard-trend{padding:12px 18px 16px;border-top:1px solid var(--tb);}
+.zcard-trend-lbl{font-family:var(--fm);font-size:9px;color:var(--mu);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.mini-trend{display:flex;gap:5px;align-items:flex-end;height:40px;}
+.mini-bar{flex:1;border-radius:2px 2px 0 0;position:relative;cursor:default;}
+.mini-bar-tip{display:none;position:absolute;bottom:calc(100%+3px);left:50%;transform:translateX(-50%);background:var(--d3);border:1px solid var(--tb);border-radius:3px;padding:2px 6px;font-family:var(--fm);font-size:9px;white-space:nowrap;color:var(--t);z-index:10;}
+.mini-bar:hover .mini-bar-tip{display:block;}
+
+/* ── HIGHLIGHT STRIPS ── */
+.hl2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+@media(max-width:700px){.hl2{grid-template-columns:1fr;}}
+.hl-col-head{font-family:var(--fm);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
+.hlitem{background:var(--d2);border:1px solid var(--tb);border-left:3px solid var(--t);border-radius:0 7px 7px 0;padding:11px 13px;margin-bottom:7px;}
+.hlitem.bad{border-left-color:var(--re);background:rgba(255,74,74,.03);}
+.hlitem.warn{border-left-color:var(--ye);}
+.hlitem-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px;gap:6px;flex-wrap:wrap;}
+.hlitem-sede{font-family:var(--fm);font-size:10px;color:var(--t);}
+.hlitem.bad .hlitem-sede{color:var(--re);}
+.hlitem.warn .hlitem-sede{color:var(--ye);}
+.hlitem-nps{font-family:var(--fd);font-size:20px;font-weight:800;flex-shrink:0;}
+.hlitem-body{font-size:11px;color:var(--mu);line-height:1.5;}
+
+/* ── TABLE ── */
+.tw{overflow-x:auto;}
+table.t{width:100%;border-collapse:collapse;font-size:12px;}
+table.t thead tr{background:rgba(0,181,163,.06);}
+table.t thead th{font-family:var(--fm);font-size:9px;letter-spacing:1.2px;text-transform:uppercase;color:var(--t);padding:8px 10px;text-align:left;border-bottom:1px solid var(--tb);white-space:nowrap;cursor:pointer;user-select:none;}
+table.t thead th:hover{color:var(--t2);}
+table.t thead th.sa::after{content:' ↑';}
+table.t thead th.sd::after{content:' ↓';}
+table.t tbody td{padding:7px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:middle;}
+table.t tbody tr:hover{background:rgba(255,255,255,.02);}
+table.t tbody tr:last-child td{border-bottom:none;}
+table.t tbody tr.hidden{display:none;}
+
+.npsp{font-family:var(--fm);font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;display:inline-block;}
+.npsp.top{background:var(--gd);color:var(--gr);border:1px solid rgba(63,185,80,.25);}
+.npsp.mid{background:var(--yd);color:var(--ye);border:1px solid rgba(245,166,35,.25);}
+.npsp.low{background:var(--rd);color:var(--re);border:1px solid rgba(255,74,74,.25);}
+
+.bdg{display:inline-block;font-family:var(--fm);font-size:9px;padding:2px 7px;border-radius:3px;}
+.bp{background:var(--td);color:var(--t);border:1px solid var(--tb);}
+.bb{background:var(--yd);color:var(--ye);border:1px solid rgba(245,166,35,.25);}
+.br{background:var(--rd);color:var(--re);border:1px solid rgba(255,74,74,.2);}
+.by{background:var(--yd);color:var(--ye);border:1px solid rgba(245,166,35,.2);}
+.bg{background:var(--gd);color:var(--gr);border:1px solid rgba(63,185,80,.2);}
+.bpu{background:rgba(181,123,255,.1);color:var(--pu);border:1px solid rgba(181,123,255,.25);}
+
+.spark{display:flex;gap:2px;align-items:flex-end;height:20px;}
+.sparkb{width:7px;border-radius:1px 1px 0 0;}
+
+/* ── FILTERS ── */
+.fbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:18px;padding:12px 14px;background:var(--d2);border:1px solid var(--tb);border-radius:8px;}
+.flbl{font-family:var(--fm);font-size:9px;color:var(--mu);letter-spacing:1.5px;text-transform:uppercase;margin-right:2px;}
+.chip{font-family:var(--fm);font-size:10px;padding:4px 11px;border-radius:20px;border:1px solid var(--tb);color:var(--mu);background:none;cursor:pointer;transition:.15s;white-space:nowrap;}
+.chip:hover{color:var(--t);border-color:var(--t);}
+.chip.on{background:var(--td);color:var(--t);border-color:var(--t);}
+.fsep{width:1px;height:18px;background:var(--tb);}
+.srch{background:var(--d3);border:1px solid var(--tb);color:var(--tx);font-family:var(--fm);font-size:11px;padding:5px 10px;border-radius:6px;outline:none;width:180px;}
+.srch:focus{border-color:var(--t);}
+.rcnt{font-family:var(--fm);font-size:10px;color:var(--mu);}
+
+/* ── DIM BAR ── */
+.dimrow{display:flex;align-items:center;gap:8px;margin-bottom:5px;}
+.dimlbl{font-size:11px;color:var(--mu);width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.dimout{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.dimin{height:100%;border-radius:3px;transition:width .5s ease;}
+.dimval{font-family:var(--fm);font-size:10px;width:32px;text-align:right;}
+
+/* ── H-BAR ── */
+.hbar-row{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:12px;}
+.hbar-lbl{width:130px;flex-shrink:0;color:var(--tx);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hbar-n{font-family:var(--fm);font-size:10px;color:var(--mu);width:50px;flex-shrink:0;}
+.hbar-out{flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:3px;overflow:hidden;}
+.hbar-in{height:100%;border-radius:3px;display:flex;align-items:center;padding:0 8px;font-family:var(--fm);font-size:9px;color:rgba(255,255,255,.8);transition:width .5s ease;}
+.hbar-nps{font-family:var(--fm);font-size:11px;width:38px;text-align:right;}
+
+/* ── WORD CLOUD ── */
+.wordcloud{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px;}
+.wword{font-family:var(--fm);display:inline-block;border-radius:4px;padding:3px 10px;cursor:default;transition:.15s;}
+.wword:hover{opacity:.85;}
+
+/* ── STAFF CARDS ── */
+.scard{background:var(--d2);border:1px solid var(--tb);border-radius:8px;padding:14px 16px;margin-bottom:9px;}
+.scard.neg{border-color:rgba(255,74,74,.25);background:rgba(255,74,74,.03);}
+.scard-top{display:flex;align-items:baseline;gap:10px;margin-bottom:5px;flex-wrap:wrap;}
+.scard-name{font-family:var(--fd);font-size:14px;font-weight:700;color:#fff;}
+.scard-sede{font-family:var(--fm);font-size:10px;color:var(--t);}
+.scard.neg .scard-sede{color:var(--re);}
+.scard-m{font-family:var(--fm);font-size:10px;margin-left:auto;flex-shrink:0;}
+.scard-quote{font-size:12px;font-style:italic;color:var(--mu);line-height:1.6;}
+
+/* ── BRAND PAGE ── */
+.brand-dims{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px;}
+@media(max-width:800px){.brand-dims{grid-template-columns:1fr;}}
+.bdim-card{background:var(--d2);border:1px solid var(--tb);border-radius:10px;padding:18px;}
+.bdim-icon{font-size:28px;margin-bottom:8px;}
+.bdim-title{font-family:var(--fd);font-size:15px;font-weight:700;color:#fff;margin-bottom:4px;}
+.bdim-score{font-family:var(--fd);font-size:36px;font-weight:800;line-height:1;margin-bottom:6px;}
+.bdim-bar{height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin-bottom:8px;}
+.bdim-bar-fill{height:100%;border-radius:2px;}
+.bdim-insight{font-size:11px;color:var(--mu);line-height:1.6;}
+
+/* ── BOXES ── */
+.infobox{background:rgba(0,181,163,.05);border:1px solid rgba(0,181,163,.18);border-radius:7px;padding:12px 14px;font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.7;}
+.infobox strong{color:var(--t);}
+.alertbox{background:var(--rd);border:1px solid rgba(255,74,74,.2);border-radius:7px;padding:12px 14px;font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.7;}
+.alertbox strong{color:var(--re);}
+.warnbox{background:var(--yd);border:1px solid rgba(245,166,35,.2);border-radius:7px;padding:12px 14px;font-size:12px;color:var(--mu);margin-bottom:16px;line-height:1.7;}
+.warnbox strong{color:var(--ye);}
+
+/* ── CLIENT PAGE ── */
+.client-note{background:var(--d3);border:1px solid var(--tb);border-radius:8px;padding:28px;text-align:center;margin-bottom:20px;}
+.client-note-icon{font-size:40px;margin-bottom:12px;}
+.client-note-title{font-family:var(--fd);font-size:18px;font-weight:700;color:#fff;margin-bottom:8px;}
+.client-note-body{font-size:13px;color:var(--mu);line-height:1.7;max-width:600px;margin:0 auto;}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="logo">BBC</div>
+    <div>
+      <div style="font-family:var(--fm);font-size:9px;color:var(--t);letter-spacing:2px;text-transform:uppercase;">NPS Intelligence</div>
+      <div style="font-family:var(--fd);font-size:13px;font-weight:700;color:#fff;">Colombia · 2026</div>
+    </div>
+  </div>
+  <div class="topbar-mid">
+    <div class="top-kpi"><div class="top-kv" style="color:var(--t);" id="hdr-nps">94.4</div><div class="top-kl">NPS</div></div>
+    <div class="topbar-sep"></div>
+    <div class="top-kpi"><div class="top-kv" style="color:#fff;font-size:17px;" id="hdr-n">12,170</div><div class="top-kl">Encuestas</div></div>
+    <div class="topbar-sep"></div>
+    <div class="top-kpi"><div class="top-kv" style="color:var(--gr);font-size:17px;" id="hdr-prom">95.8%</div><div class="top-kl">Promotores</div></div>
+    <div class="topbar-sep"></div>
+    <div class="top-kpi"><div class="top-kv" style="color:var(--re);font-size:17px;" id="hdr-det">1.4%</div><div class="top-kl">Detractores</div></div>
+  </div>
+  <div class="top-period">PERÍODO: <span>Ene–May 2026</span><br>SEMANA: <span>21</span> · SEDES: <span>79 activas</span></div>
+</div>
+
+<!-- NAV TABS -->
+<div class="navtabs">
+  <button class="navtab on" onclick="showTab('zonas',this)">01 · Resumen por Zona</button>
+  <button class="navtab" onclick="showTab('ranking',this)">02 · Ranking PDV</button>
+  <button class="navtab" onclick="showTab('marca',this)">03 · Análisis de Marca</button>
+  <button class="navtab" onclick="showTab('cliente',this)">04 · Quién nos califica</button>
+  <button class="navtab" onclick="showTab('equipo',this)">05 · Equipo</button>
+</div>
+
+<!-- ======================= TAB 1: ZONAS ======================= -->
+<div id="sec-zonas" class="sec on">
+  <div class="stitle">Resumen por Zona <span class="stag">3 Regionales + Santanderes + Norte</span></div>
+
+  <!-- PROPIO vs FRANQUICIA global -->
+  <div class="g3" style="margin-bottom:16px;">
+    <div class="card">
+      <div class="clbl">NPS Global Red</div>
+      <div class="cval t" id="kpi-g-nps">94.4</div>
+      <div class="cdsc">12,170 encuestas · Ene–May 2026</div>
+    </div>
+    <div class="card g">
+      <div class="clbl">Propio BBC</div>
+      <div class="cval g" id="kpi-prop-nps">95.5</div>
+      <div class="cdsc" id="kpi-prop-desc">8,032 enc · 96.7% promotores · 1.1% detractores</div>
+    </div>
+    <div class="card p">
+      <div class="clbl">Franquicia</div>
+      <div class="cval" style="color:var(--pu);" id="kpi-fran-nps">92.2</div>
+      <div class="cdsc" id="kpi-fran-desc">4,138 enc · 94.2% promotores · 2.0% detractores</div>
+    </div>
+  </div>
+  <div class="infobox" style="margin-bottom:20px;">
+    <strong>Propio vs Franquicia:</strong> Los puntos propios de BBC tienen un NPS de <strong>95.5</strong> (8,032 encuestas) vs <strong>92.2</strong> en franquicias (4,138 encuestas). La brecha de 3.3 puntos y la diferencia en tasa de detractores (1.1% vs 2.0%) reflejan mayor control operativo en los propios. <strong>Regional Centro</strong> concentra el 97% de los propios — todos en Bogotá.
+  </div>
+
+  <div class="zona-cards" id="zona-cards-container"></div>
+
+  <hr class="dv">
+  <div class="stitle">Highlights <span class="stag" id="hl-tag">Red completa</span></div>
+  <div class="hl2">
+    <div>
+      <div class="hl-col-head" style="color:var(--t);">✦ Lo que está funcionando</div>
+      <div id="hl-good"></div>
+    </div>
+    <div>
+      <div class="hl-col-head" style="color:var(--re);">⚠ Requiere atención</div>
+      <div id="hl-bad"></div>
+    </div>
+  </div>
+
+  <hr class="dv">
+  <div class="stitle">Evolución mensual NPS global</div>
+  <div class="card">
+    <div style="display:flex;gap:6px;align-items:flex-end;height:80px;" id="global-trend"></div>
+    <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;" id="global-trend-leg"></div>
+  </div>
+</div>
+
+<!-- ======================= TAB 2: RANKING ======================= -->
+<div id="sec-ranking" class="sec">
+  <div class="fbar">
+    <span class="flbl">Zona</span>
+    <button class="chip on" onclick="setZ('Todas',this)">Todas</button>
+    <button class="chip" onclick="setZ('Regional Centro',this)">Centro</button>
+    <button class="chip" onclick="setZ('Regional Andes',this)">Andes</button>
+    <button class="chip" onclick="setZ('Regional Sur',this)">Sur</button>
+    <button class="chip" onclick="setZ('Santanderes',this)">Santanderes</button>
+    <button class="chip" onclick="setZ('Regional Norte',this)">Norte</button>
+    <div class="fsep"></div>
+    <span class="flbl">Canal</span>
+    <button class="chip on" onclick="setC('Todos',this)">Todos</button>
+    <button class="chip" onclick="setC('Pub',this)">Pub</button>
+    <button class="chip" onclick="setC('Bodega',this)">Bodega</button>
+    <div class="fsep"></div>
+    <span class="flbl">Negocio</span>
+    <button class="chip on" onclick="setN('Todos',this)">Todos</button>
+    <button class="chip" onclick="setN('PROPIO',this)">Propio BBC</button>
+    <button class="chip" onclick="setN('FRANQUICIA',this)">Franquicia</button>
+    <div class="fsep"></div>
+    <input class="srch" id="srch" type="text" placeholder="Buscar sede…" oninput="renderTable()">
+    <span class="rcnt" id="rcnt"></span>
+  </div>
+  <div class="tw">
+    <table class="t" id="pdvtable">
+      <thead><tr>
+        <th onclick="srt('sede')">PDV</th>
+        <th onclick="srt('zona')">Zona</th>
+        <th onclick="srt('negocio')">Negocio</th>
+        <th onclick="srt('canal')">Canal</th>
+        <th onclick="srt('nps')">NPS</th>
+        <th onclick="srt('n')">Enc.</th>
+        <th onclick="srt('sat')">Sat.</th>
+        <th onclick="srt('amab')">Amab.</th>
+        <th onclick="srt('amb')">Amb.</th>
+        <th onclick="srt('agil')">Agil.</th>
+        <th onclick="srt('pct_det')">%Det.</th>
+        <th>Tendencia</th>
+        <th>Comentario</th>
+        <th>Alerta</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ======================= TAB 3: MARCA ======================= -->
+<div id="sec-marca" class="sec">
+  <div class="stitle">Análisis de Marca BBC</div>
+  <p style="color:var(--mu);font-size:12px;margin-bottom:20px;">Basado en 4,284 comentarios · palabras más usadas · cómo nos califican por dimensión</p>
+
+  <div class="stitle">Palabras más frecuentes — toda la base</div>
+  <div class="wordcloud" id="wc-all"></div>
+
+  <div class="g2">
+    <div>
+      <div class="stitle">Palabras de promotores <span class="stag">top 20</span></div>
+      <div class="wordcloud" id="wc-prom"></div>
+    </div>
+    <div>
+      <div class="stitle">Palabras de detractores <span class="stag">top 20</span></div>
+      <div class="wordcloud" id="wc-det"></div>
+    </div>
+  </div>
+
+  <hr class="dv">
+  <div class="stitle">Cómo nos califican — 6 dimensiones de marca</div>
+  <div class="brand-dims" id="brand-dims"></div>
+
+  <hr class="dv">
+  <div class="stitle">Señales de identidad de marca</div>
+  <div class="g3">
+    <div class="card">
+      <div class="clbl">Tercer lugar — evidencia</div>
+      <div class="cval sm t">108 menciones</div>
+      <div class="cdsc" style="margin-top:6px;">"Amigos", "compartir", "pasar rato" aparecen 108 veces. El cliente viene a BBC por conexión social, no solo por cerveza.</div>
+    </div>
+    <div class="card">
+      <div class="clbl">Reconocimiento por nombre</div>
+      <div class="cval sm t">18 colaboradores</div>
+      <div class="cdsc" style="margin-top:6px;">Clientes que nombran a un colaborador específico de forma positiva. Esto construye lealtad personal más duradera que la lealtad a la marca.</div>
+    </div>
+    <div class="card r">
+      <div class="clbl">ADN perdido — señal de alerta</div>
+      <div class="cval sm r">4 PDV</div>
+      <div class="cdsc" style="margin-top:6px;">"Ya no es lo que era", "no hay nada de la cultura cervecera" — 4 sedes con menciones de pérdida de identidad: Pub Conecta, Pub Titan, Bodega Chico, Bodega Calle 165.</div>
+    </div>
+  </div>
+
+  <div class="infobox">
+    <strong>Insight de marca:</strong> Las 5 palabras que más definen BBC según sus clientes son: <strong>servicio · atención · excelente · ambiente · lugar</strong>. El producto (cerveza) aparece en sexto lugar. Esto confirma que BBC se compra por experiencia, no por producto. La amenaza no es que la cerveza sea mala — es que el servicio o el ambiente fallen. La palabra "compartir" (77 veces) y "amigos" (108) son la prueba de que el concepto de "fermentar comunidad" vive en los promotores.
+  </div>
+</div>
+
+<!-- ======================= TAB 4: CLIENTE ======================= -->
+<div id="sec-cliente" class="sec">
+  <div class="stitle">¿Quién nos califica?</div>
+
+  <div class="client-note">
+    <div class="client-note-icon">📊</div>
+    <div class="client-note-title">Datos demográficos no disponibles en la base actual</div>
+    <div class="client-note-body">La encuesta de NPS Semana 21 no captura edad, género, estrato ni frecuencia de visita. Los únicos campos de identidad son nombre, teléfono y correo. Para activar esta sección, se recomienda agregar al formulario: <strong>edad (rangos)</strong>, <strong>frecuencia de visita</strong> y <strong>ocasión de consumo</strong>.</div>
+  </div>
+
+  <div class="stitle">Lo que sí podemos inferir del comportamiento</div>
+  <div class="g3">
+    <div class="card">
+      <div class="clbl">Teléfonos válidos (contactables)</div>
+      <div class="cval sm t">9,443</div>
+      <div class="cdsc">83.1% dejó un número colombiano real (3XXXXXXXXX). 1,921 pusieron cero o formato inválido.</div>
+    </div>
+    <div class="card">
+      <div class="clbl">Emails válidos</div>
+      <div class="cval sm t">11,260</div>
+      <div class="cdsc">99.1% del total. Campo con mayor cobertura — ideal para campañas de reactivación.</div>
+    </div>
+    <div class="card g">
+      <div class="clbl">Clientes "vecis" identificados</div>
+      <div class="cval sm g">134</div>
+      <div class="cdsc">Teléfonos que aparecen 3+ veces en fechas distintas. Son el segmento más valioso — visitan repetidamente y responden siempre.</div>
+    </div>
+  </div>
+
+  <div class="g2">
+    <div class="card">
+      <div class="clbl">Distribución por zona</div>
+      <div id="zona-dist" style="margin-top:12px;"></div>
+    </div>
+    <div class="card">
+      <div class="clbl">Distribución por canal</div>
+      <div style="margin-top:12px;">
+        <div class="hbar-row">
+          <div class="hbar-lbl">Pub</div>
+          <div class="hbar-n">n=9,673</div>
+          <div class="hbar-out"><div class="hbar-in" style="width:79.5%;background:var(--t);">79.5%</div></div>
+          <div class="hbar-nps" style="color:var(--t);">95.2</div>
+        </div>
+        <div class="hbar-row">
+          <div class="hbar-lbl">Bodega</div>
+          <div class="hbar-n">n=2,497</div>
+          <div class="hbar-out"><div class="hbar-in" style="width:20.5%;background:var(--ye);">20.5%</div></div>
+          <div class="hbar-nps" style="color:var(--ye);">91.5</div>
+        </div>
+      </div>
+      <div class="cdsc" style="margin-top:12px;">Los pubs concentran el 79.5% de respuestas y tienen NPS superior. Las bodegas tienen menor volumen de encuesta y mayor variabilidad.</div>
+    </div>
+  </div>
+
+  <div class="stitle">Señales de comportamiento detectadas</div>
+  <div class="g3">
+    <div class="card g">
+      <div class="clbl">Clientes frecuentes multi-sede</div>
+      <div class="cval xs g">"Recurrente viajero"</div>
+      <div class="cdsc" style="margin-top:6px;">119 teléfonos visitaron 3+ sedes distintas en el período. Son embajadores naturales — conocen la marca mejor que muchos empleados.</div>
+    </div>
+    <div class="card">
+      <div class="clbl">Ocasión principal inferida</div>
+      <div class="cval xs t">"Pasar rato con amigos"</div>
+      <div class="cdsc" style="margin-top:6px;">"Amigos" (108 menciones) y "compartir" (77) definen la ocasión dominante. After-office y fines de semana son los horarios implícitos.</div>
+    </div>
+    <div class="card y">
+      <div class="clbl">Señal de cliente nuevo</div>
+      <div class="cval xs y">"Primera vez" detectada</div>
+      <div class="cdsc" style="margin-top:6px;">"Primera vez que vengo", "la primera visita" aparece en 34 comentarios. Estos clientes evalúan con más detalle — sus quejas son las más representativas de la experiencia de entrada.</div>
+    </div>
+  </div>
+
+  <div class="warnbox">
+    <strong>Recomendación para próxima ola:</strong> Agregar 2 preguntas al formulario: <br>
+    1. "¿Con qué frecuencia visitas BBC?" — Opciones: Primera vez / Ocasional (1–2/mes) / Frecuente (1–2/semana) / Veci (casi diario)<br>
+    2. "¿Cuál es tu rango de edad?" — 18–24 / 25–34 / 35–44 / 45–54 / 55+<br>
+    Con esos dos campos, la sección de cliente se convierte en el insight más estratégico del tablero.
+  </div>
+</div>
+
+<!-- ======================= TAB 5: EQUIPO ======================= -->
+<div id="sec-equipo" class="sec">
+  <div class="stitle">Personal mencionado por clientes <span class="stag">286 comentarios con nombre propio</span></div>
+  <p style="color:var(--mu);font-size:12px;margin-bottom:20px;">Extraídos de comentarios abiertos. Solo aparecen colaboradores mencionados espontáneamente — sin inducción.</p>
+
+  <div class="g2">
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+        <div style="width:10px;height:10px;background:var(--t);border-radius:50%;"></div>
+        <div style="font-family:var(--fd);font-size:14px;font-weight:700;color:#fff;">Mencionados positivamente</div>
+        <div class="bdg bp" style="margin-left:auto;">18 colaboradores</div>
+      </div>
+      <div id="staff-pos"></div>
+    </div>
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;">
+        <div style="width:10px;height:10px;background:var(--re);border-radius:50%;"></div>
+        <div style="font-family:var(--fd);font-size:14px;font-weight:700;color:#fff;">Mencionados negativamente</div>
+        <div class="bdg br" style="margin-left:auto;">9 situaciones</div>
+      </div>
+      <div id="staff-neg"></div>
+      <div class="alertbox" style="margin-top:12px;">
+        <strong>3 casos de acción inmediata:</strong> Cajera Cedritos (cobro doble), encargada Pub Salitre (cobro propina forzado), Carlos Bodega Calle 93 (acusación a cliente). Los 3 tienen suficiente especificidad para investigación individual.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const D = {"global":{"nps":94.4,"n":12170,"promotores":11659,"pasivos":341,"detractores":170,"pct_prom":95.8,"pct_det":1.4,"sat":9.73,"amab":9.81,"amb":9.62,"agil":9.74,"cal":9.75},"global_propio":{"nps":95.5,"n":8032,"promotores":7763,"pasivos":180,"detractores":89,"pct_prom":96.7,"pct_det":1.1,"sat":9.77,"amab":9.86,"amb":9.7,"agil":9.77,"cal":9.77},"global_franquicia":{"nps":92.2,"n":4138,"promotores":3896,"pasivos":161,"detractores":81,"pct_prom":94.2,"pct_det":2.0,"sat":9.65,"amab":9.73,"amb":9.47,"agil":9.67,"cal":9.71},"monthly":[{"nps":93.9,"n":2472,"promotores":2352,"pasivos":88,"detractores":32,"pct_prom":95.1,"pct_det":1.3,"sat":9.68,"amab":9.75,"amb":9.61,"agil":9.67,"cal":9.67,"mes":"Ene"},{"nps":94.6,"n":3344,"promotores":3202,"pasivos":102,"detractores":40,"pct_prom":95.8,"pct_det":1.2,"sat":9.75,"amab":9.83,"amb":9.66,"agil":9.74,"cal":9.76,"mes":"Feb"},{"nps":93.9,"n":2484,"promotores":2382,"pasivos":53,"detractores":49,"pct_prom":95.9,"pct_det":2.0,"sat":9.72,"amab":9.79,"amb":9.59,"agil":9.75,"cal":9.76,"mes":"Mar"},{"nps":94.7,"n":2126,"promotores":2041,"pasivos":57,"detractores":28,"pct_prom":96.0,"pct_det":1.3,"sat":9.76,"amab":9.86,"amb":9.62,"agil":9.77,"cal":9.79,"mes":"Abr"},{"nps":95.2,"n":1744,"promotores":1682,"pasivos":41,"detractores":21,"pct_prom":96.4,"pct_det":1.2,"sat":9.75,"amab":9.85,"amb":9.61,"agil":9.77,"cal":9.78,"mes":"May"}],"zonas":{"Regional Centro":{"nps":94.8,"n":11788,"promotores":11320,"pasivos":320,"detractores":148,"pct_prom":96.0,"pct_det":1.3,"sat":9.74,"amab":9.83,"amb":9.64,"agil":9.75,"cal":9.76,"propio":{"nps":95.6,"n":7965,"promotores":7704,"pasivos":175,"detractores":86,"pct_prom":96.7,"pct_det":1.1,"sat":9.78,"amab":9.86,"amb":9.71,"agil":9.78,"cal":9.77},"franquicia":{"nps":93.0,"n":3823,"promotores":3616,"pasivos":145,"detractores":62,"pct_prom":94.6,"pct_det":1.6,"sat":9.67,"amab":9.77,"amb":9.5,"agil":9.7,"cal":9.73},"pub":{"nps":95.2,"n":9581,"promotores":9231,"pasivos":244,"detractores":106,"pct_prom":96.3,"pct_det":1.1,"sat":9.77,"amab":9.84,"amb":9.71,"agil":9.76,"cal":9.76},"bodega":{"nps":92.8,"n":2207,"promotores":2089,"pasivos":76,"detractores":42,"pct_prom":94.7,"pct_det":1.9,"sat":9.64,"amab":9.77,"amb":9.32,"agil":9.72,"cal":9.75},"monthly":[{"nps":94.4,"n":2402,"promotores":2293,"pasivos":83,"detractores":26,"pct_prom":95.5,"pct_det":1.1,"sat":9.69,"amab":9.77,"amb":9.63,"agil":9.69,"cal":9.69,"mes":"Ene"},{"nps":94.9,"n":3292,"promotores":3158,"pasivos":100,"detractores":34,"pct_prom":95.9,"pct_det":1.0,"sat":9.76,"amab":9.85,"amb":9.67,"agil":9.75,"cal":9.77,"mes":"Feb"},{"nps":94.4,"n":2405,"promotores":2313,"pasivos":49,"detractores":43,"pct_prom":96.2,"pct_det":1.8,"sat":9.74,"amab":9.82,"amb":9.61,"agil":9.77,"cal":9.78,"mes":"Mar"},{"nps":94.9,"n":2072,"promotores":1992,"pasivos":54,"detractores":26,"pct_prom":96.1,"pct_det":1.3,"sat":9.77,"amab":9.86,"amb":9.64,"agil":9.78,"cal":9.8,"mes":"Abr"},{"nps":95.5,"n":1617,"promotores":1564,"pasivos":34,"detractores":19,"pct_prom":96.7,"pct_det":1.2,"sat":9.76,"amab":9.85,"amb":9.62,"agil":9.78,"cal":9.78,"mes":"May"}]},"Regional Andes":{"nps":83.7,"n":172,"promotores":155,"pasivos":6,"detractores":11,"pct_prom":90.1,"pct_det":6.4,"sat":9.48,"amab":9.56,"amb":9.25,"agil":9.49,"cal":9.62,"propio":{"nps":84.4,"n":32,"promotores":29,"pasivos":1,"detractores":2,"pct_prom":90.6,"pct_det":6.2,"sat":9.46,"amab":9.44,"amb":9.53,"agil":9.34,"cal":9.53},"franquicia":{"nps":83.6,"n":140,"promotores":126,"pasivos":5,"detractores":9,"pct_prom":90.0,"pct_det":6.4,"sat":9.49,"amab":9.59,"amb":9.19,"agil":9.53,"cal":9.64},"pub":{"nps":76.5,"n":17,"promotores":15,"pasivos":0,"detractores":2,"pct_prom":88.2,"pct_det":11.8,"sat":9.03,"amab":9.12,"amb":8.94,"agil":9.12,"cal":8.94},"bodega":{"nps":84.5,"n":155,"promotores":140,"pasivos":6,"detractores":9,"pct_prom":90.3,"pct_det":5.8,"sat":9.53,"amab":9.61,"amb":9.28,"agil":9.54,"cal":9.69},"monthly":[{"nps":27.3,"n":11,"promotores":6,"pasivos":2,"detractores":3,"pct_prom":54.5,"pct_det":27.3,"sat":7.75,"amab":8.36,"amb":6.73,"agil":8.09,"cal":7.82,"mes":"Ene"},{"nps":75.0,"n":32,"promotores":28,"pasivos":0,"detractores":4,"pct_prom":87.5,"pct_det":12.5,"sat":9.39,"amab":9.53,"amb":8.69,"agil":9.62,"cal":9.72,"mes":"Feb"},{"nps":93.9,"n":33,"promotores":32,"pasivos":0,"detractores":1,"pct_prom":97.0,"pct_det":3.0,"sat":9.7,"amab":9.73,"amb":9.73,"agil":9.64,"cal":9.73,"mes":"Mar"},{"nps":81.0,"n":21,"promotores":19,"pasivos":0,"detractores":2,"pct_prom":90.5,"pct_det":9.5,"sat":8.96,"amab":9.14,"amb":8.71,"agil":8.86,"cal":9.14,"mes":"Abr"},{"nps":92.0,"n":75,"promotores":70,"pasivos":4,"detractores":1,"pct_prom":93.3,"pct_det":1.3,"sat":9.82,"amab":9.8,"amb":9.8,"agil":9.76,"cal":9.92,"mes":"May"}]},"Regional Sur":{"nps":77.3,"n":119,"promotores":101,"pasivos":9,"detractores":9,"pct_prom":84.9,"pct_det":7.6,"sat":9.06,"amab":8.92,"amb":9.19,"agil":9.09,"cal":9.04,"propio":{"nps":100.0,"n":9,"promotores":9,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0},"franquicia":{"nps":75.5,"n":110,"promotores":92,"pasivos":9,"detractores":9,"pct_prom":83.6,"pct_det":8.2,"sat":8.98,"amab":8.83,"amb":9.13,"agil":9.02,"cal":8.96},"pub":null,"bodega":{"nps":77.3,"n":119,"promotores":101,"pasivos":9,"detractores":9,"pct_prom":84.9,"pct_det":7.6,"sat":9.06,"amab":8.92,"amb":9.19,"agil":9.09,"cal":9.04},"monthly":[{"nps":78.9,"n":19,"promotores":17,"pasivos":0,"detractores":2,"pct_prom":89.5,"pct_det":10.5,"sat":9.17,"amab":9.37,"amb":9.05,"agil":9.37,"cal":8.89,"mes":"Ene"},{"nps":55.6,"n":9,"promotores":6,"pasivos":2,"detractores":1,"pct_prom":66.7,"pct_det":11.1,"sat":8.0,"amab":7.0,"amb":9.0,"agil":7.0,"cal":9.0,"mes":"Feb"},{"nps":58.8,"n":34,"promotores":25,"pasivos":4,"detractores":5,"pct_prom":73.5,"pct_det":14.7,"sat":8.21,"amab":7.71,"amb":8.5,"agil":8.41,"cal":8.24,"mes":"Mar"},{"nps":88.2,"n":17,"promotores":15,"pasivos":2,"detractores":0,"pct_prom":88.2,"pct_det":0.0,"sat":9.74,"amab":9.82,"amb":9.47,"agil":9.82,"cal":9.82,"mes":"Abr"},{"nps":92.5,"n":40,"promotores":38,"pasivos":1,"detractores":1,"pct_prom":95.0,"pct_det":2.5,"sat":9.68,"amab":9.78,"amb":9.78,"agil":9.7,"cal":9.48,"mes":"May"}]},"Santanderes":{"nps":93.6,"n":78,"promotores":74,"pasivos":3,"detractores":1,"pct_prom":94.9,"pct_det":1.3,"sat":9.5,"amab":9.58,"amb":9.31,"agil":9.54,"cal":9.58,"propio":{"nps":92.3,"n":13,"promotores":12,"pasivos":1,"detractores":0,"pct_prom":92.3,"pct_det":0.0,"sat":9.65,"amab":9.77,"amb":9.08,"agil":10.0,"cal":9.77},"franquicia":{"nps":93.8,"n":65,"promotores":62,"pasivos":2,"detractores":1,"pct_prom":95.4,"pct_det":1.5,"sat":9.47,"amab":9.54,"amb":9.35,"agil":9.45,"cal":9.54},"pub":{"nps":93.5,"n":62,"promotores":59,"pasivos":2,"detractores":1,"pct_prom":95.2,"pct_det":1.6,"sat":9.52,"amab":9.61,"amb":9.42,"agil":9.42,"cal":9.61},"bodega":{"nps":93.8,"n":16,"promotores":15,"pasivos":1,"detractores":0,"pct_prom":93.8,"pct_det":0.0,"sat":9.44,"amab":9.44,"amb":8.88,"agil":10.0,"cal":9.44},"monthly":[{"nps":94.7,"n":38,"promotores":36,"pasivos":2,"detractores":0,"pct_prom":94.7,"pct_det":0.0,"sat":9.45,"amab":9.53,"amb":9.37,"agil":9.29,"cal":9.61,"mes":"Ene"},{"nps":80.0,"n":10,"promotores":9,"pasivos":0,"detractores":1,"pct_prom":90.0,"pct_det":10.0,"sat":8.72,"amab":8.5,"amb":8.8,"agil":9.1,"cal":8.5,"mes":"Feb"},{"nps":100.0,"n":11,"promotores":11,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.8,"amab":10.0,"amb":9.45,"agil":10.0,"cal":9.73,"mes":"Mar"},{"nps":100.0,"n":13,"promotores":13,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.88,"amab":10.0,"amb":9.54,"agil":10.0,"cal":10.0,"mes":"Abr"},{"nps":83.3,"n":6,"promotores":5,"pasivos":1,"detractores":0,"pct_prom":83.3,"pct_det":0.0,"sat":9.75,"amab":10.0,"amb":9.0,"agil":10.0,"cal":10.0,"mes":"May"}]},"Regional Norte":{"nps":61.5,"n":13,"promotores":9,"pasivos":3,"detractores":1,"pct_prom":69.2,"pct_det":7.7,"sat":8.15,"amab":9.31,"amb":5.38,"agil":8.85,"cal":9.08,"propio":{"nps":61.5,"n":13,"promotores":9,"pasivos":3,"detractores":1,"pct_prom":69.2,"pct_det":7.7,"sat":8.15,"amab":9.31,"amb":5.38,"agil":8.85,"cal":9.08},"franquicia":null,"pub":{"nps":61.5,"n":13,"promotores":9,"pasivos":3,"detractores":1,"pct_prom":69.2,"pct_det":7.7,"sat":8.15,"amab":9.31,"amb":5.38,"agil":8.85,"cal":9.08},"bodega":null,"monthly":[{"nps":-50.0,"n":2,"promotores":0,"pasivos":1,"detractores":1,"pct_prom":0.0,"pct_det":50.0,"sat":8.5,"amab":8.5,"amb":8.5,"agil":8.5,"cal":8.5,"mes":"Ene"},{"nps":100.0,"n":1,"promotores":1,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"mes":"Feb"},{"nps":100.0,"n":1,"promotores":1,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"mes":"Mar"},{"nps":66.7,"n":3,"promotores":2,"pasivos":1,"detractores":0,"pct_prom":66.7,"pct_det":0.0,"sat":8.25,"amab":10.0,"amb":3.0,"agil":10.0,"cal":10.0,"mes":"Abr"},{"nps":83.3,"n":6,"promotores":5,"pasivos":1,"detractores":0,"pct_prom":83.3,"pct_det":0.0,"sat":7.38,"amab":9.0,"amb":4.0,"agil":8.0,"cal":8.5,"mes":"May"}]}},"sedes":[{"nps":100.0,"n":6,"promotores":6,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.38,"amab":10.0,"amb":9.0,"agil":9.5,"cal":9.0,"sede":"Bodega Centro Histórico","zona":"Regional Sur","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"3":100.0,"5":100.0},"comments":["10, es un lugar muy chevere muy buena musica y los meseros super atentos todos.","Luis el mejor"],"det_comment":""},{"nps":100.0,"n":9,"promotores":9,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"sede":"Bodega Estudiantes","zona":"Regional Sur","canal":"Bodega","negocio":"PROPIO","monthly":{"1":100.0,"2":100.0,"5":100.0},"comments":["El servicio del personal es excelente  super amables y serviciales","El mejor lugar, la atención, la experiencia 10/10 recomendado y en especial una gratitud a la señora Sandra Ló"],"det_comment":""},{"nps":100.0,"n":10,"promotores":10,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.93,"amab":10.0,"amb":9.7,"agil":10.0,"cal":10.0,"sede":"Bodega Jardín Plaza","zona":"Regional Sur","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"3":100.0,"5":100.0},"comments":["La atención de Sara Isabel excelente","Sebastian es el mejor del mundo mundial"],"det_comment":""},{"nps":100.0,"n":6,"promotores":6,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"sede":"Bodega Laureles","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"5":100.0},"comments":["Muy buena atencion","Increíbles personas, son los mejores a los cuales me hayan recibido"],"det_comment":""},{"nps":100.0,"n":19,"promotores":19,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.61,"amab":9.68,"amb":9.53,"agil":9.68,"cal":9.53,"sede":"Bodega Los Héroes","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"4":100.0},"comments":["Excelente servicio, nuevo punto pero muy bien atendido, no solo a mí, de eso es lo que depende mi fidelidad, n","Me alegra que regresará arboleda es mi bodega favorita"],"det_comment":""},{"nps":100.0,"n":5,"promotores":5,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"sede":"Bodega Mall Plaza","zona":"Regional Centro","canal":"Bodega","negocio":"PROPIO","monthly":{"5":100.0},"comments":["La música de los 80 su gente el ambiente y la mejor pola","Muy buen servicio"],"det_comment":""},{"nps":100.0,"n":13,"promotores":13,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.71,"amab":9.77,"amb":9.77,"agil":9.77,"cal":9.54,"sede":"Bodega Nuestro Bogotá","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":100.0,"4":100.0,"5":100.0},"comments":["Martín, Mafe y Miguel muy top !!","Excelente atencion"],"det_comment":""},{"nps":100.0,"n":12,"promotores":12,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"sede":"Bodega Tuluá","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"5":100.0},"comments":["Por qué es un ambiente agradable","Es un lugar muy agradable"],"det_comment":""},{"nps":100.0,"n":40,"promotores":40,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":9.98,"amab":10.0,"amb":10.0,"agil":9.93,"cal":10.0,"sede":"Pub Diver Plaza","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":100.0,"4":100.0,"5":100.0},"comments":["Buena honda","Me encanta venir a este lugar"],"det_comment":""},{"nps":100.0,"n":8,"promotores":8,"pasivos":0,"detractores":0,"pct_prom":100.0,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"sede":"Pub Strada","zona":"Regional Andes","canal":"Pub","negocio":"FRANQUICIA","monthly":{"2":100.0,"5":100.0},"comments":["Excelente servicio","Buen servicio, de Karen"],"det_comment":""},{"nps":98.8,"n":515,"promotores":510,"pasivos":4,"detractores":1,"pct_prom":99.0,"pct_det":0.2,"sat":9.95,"amab":9.98,"amb":9.92,"agil":9.97,"cal":9.94,"sede":"Pub Calle 63","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":96.2,"2":100.0,"3":97.2,"4":100.0,"5":100.0},"comments":["Excelente atención del Mesero Nicolás, una muy buena energía.","El dia de ayer jueves 26 de marzo, consumimos  3 jarras de cerveza rubia, hoy viernes 27 de marzo, me doy cuen"],"det_comment":"El dia de ayer jueves 26 de marzo, consumimos  3 jarras de cerveza rubia, hoy viernes 27 de marzo, me doy cuen"},{"nps":98.6,"n":1053,"promotores":1041,"pasivos":9,"detractores":3,"pct_prom":98.9,"pct_det":0.3,"sat":9.87,"amab":9.96,"amb":9.74,"agil":9.94,"cal":9.86,"sede":"Pub Calle 85","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":95.7,"2":99.5,"3":99.5,"4":98.1,"5":100.0},"comments":["Agradable lugar","Buen lugar, buen servicio. Volvere"],"det_comment":"El día de ayer fuimos con un grupo de amigos a tomarnos una cerveza en el BBC de la calle 85 y el mesero Nicol"},{"nps":98.1,"n":539,"promotores":533,"pasivos":2,"detractores":4,"pct_prom":98.9,"pct_det":0.7,"sat":9.87,"amab":9.91,"amb":9.82,"agil":9.89,"cal":9.88,"sede":"Pub Candelaria","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":100.0,"2":97.3,"3":100.0,"4":96.2,"5":84.0},"comments":["La cadena bbc tiene muy buenos pubs, se destacan por la exclusividad sin embargo el pub de la Candelaria te mu","No recomiendo BBC Candelaria en absoluto. La experiencia fue pésima: nos entregaron comida diferente a la soli"],"det_comment":"La cadena bbc tiene muy buenos pubs, se destacan por la exclusividad sin embargo el pub de la Candelaria te mu"},{"nps":97.9,"n":536,"promotores":526,"pasivos":9,"detractores":1,"pct_prom":98.1,"pct_det":0.2,"sat":9.9,"amab":9.9,"amb":9.89,"agil":9.89,"cal":9.94,"sede":"Pub Plaza Central","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":95.7,"2":97.9,"3":97.4,"4":100.0,"5":100.0},"comments":["Por q no implementan Pizza con carne  casi todas son cm vegetarianas","Es muy buen personal, excelente persona y muy buena atencion"],"det_comment":"La atención al cliente es pésima"},{"nps":97.8,"n":179,"promotores":175,"pasivos":4,"detractores":0,"pct_prom":97.8,"pct_det":0.0,"sat":9.77,"amab":9.9,"amb":9.56,"agil":9.83,"cal":9.78,"sede":"Bodega Terraza Pasteur","zona":"Regional Centro","canal":"Bodega","negocio":"PROPIO","monthly":{"1":97.8,"2":98.2,"3":100.0,"4":100.0,"5":93.3},"comments":["Las personas son muy alegres y amigables, gracias por ese bonito servicio","Es un buen ambiente"],"det_comment":""},{"nps":97.7,"n":1080,"promotores":1060,"pasivos":15,"detractores":5,"pct_prom":98.1,"pct_det":0.5,"sat":9.89,"amab":9.92,"amb":9.84,"agil":9.88,"cal":9.9,"sede":"Pub Galerías","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":94.2,"2":96.9,"3":99.1,"4":100.0,"5":96.3},"comments":["Excelente servicio","10 la atención fue fenomenal"],"det_comment":"Tarda un poco pero no tanto"},{"nps":97.5,"n":80,"promotores":78,"pasivos":2,"detractores":0,"pct_prom":97.5,"pct_det":0.0,"sat":9.82,"amab":9.96,"amb":9.62,"agil":9.85,"cal":9.85,"sede":"Pub Belaire","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":100.0,"2":95.8,"3":100.0,"4":93.8,"5":100.0},"comments":["Una atención personalizada y muy amable del personal.","Atención bueno"],"det_comment":""},{"nps":97.2,"n":71,"promotores":70,"pasivos":0,"detractores":1,"pct_prom":98.6,"pct_det":1.4,"sat":9.81,"amab":9.79,"amb":9.87,"agil":9.66,"cal":9.92,"sede":"Bodega Corferias","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":66.7,"4":100.0},"comments":["Muy buena atención","Muy buena atención"],"det_comment":"0, el personal no indica que el producto viene con whisky y por ende vale más"},{"nps":97.1,"n":870,"promotores":848,"pasivos":19,"detractores":3,"pct_prom":97.5,"pct_det":0.3,"sat":9.85,"amab":9.91,"amb":9.76,"agil":9.88,"cal":9.85,"sede":"Pub San Martin","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":98.2,"2":95.9,"3":97.5,"4":98.9,"5":93.8},"comments":["Gabriela nos atendió de maravilla","Este no, he ido a otros puntos y ha estado súper! Este punto no estuvo bien"],"det_comment":"Este no, he ido a otros puntos y ha estado súper! Este punto no estuvo bien"},{"nps":96.9,"n":160,"promotores":155,"pasivos":5,"detractores":0,"pct_prom":96.9,"pct_det":0.0,"sat":9.77,"amab":9.89,"amb":9.7,"agil":9.74,"cal":9.76,"sede":"Bodega Plaza Claro","zona":"Regional Centro","canal":"Bodega","negocio":"PROPIO","monthly":{"1":95.3,"2":98.6,"5":100.0},"comments":["Me  gusto la atención","Muy buena experiencia"],"det_comment":""},{"nps":96.7,"n":60,"promotores":58,"pasivos":2,"detractores":0,"pct_prom":96.7,"pct_det":0.0,"sat":9.45,"amab":9.45,"amb":9.4,"agil":9.45,"cal":9.5,"sede":"Bodega Calle 100","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":87.5,"2":94.7,"3":100.0,"4":100.0,"5":100.0},"comments":["Fue muy amable y atenta","10, la chica es muy amable"],"det_comment":""},{"nps":96.7,"n":30,"promotores":29,"pasivos":1,"detractores":0,"pct_prom":96.7,"pct_det":0.0,"sat":9.85,"amab":9.8,"amb":9.8,"agil":9.8,"cal":10.0,"sede":"Bodega Ciudad del Rio","zona":"Regional Andes","canal":"Bodega","negocio":"PROPIO","monthly":{"5":96.7},"comments":["Porque siempre paso buenos momentos en bbc","Dentro de las instalaciones por las altas temperaturas se siente mas el calor, pero en cuanto servicio al clie"],"det_comment":""},{"nps":96.5,"n":677,"promotores":654,"pasivos":22,"detractores":1,"pct_prom":96.6,"pct_det":0.1,"sat":9.63,"amab":9.94,"amb":8.77,"agil":9.9,"cal":9.89,"sede":"Bodega Park Way","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":92.8,"2":95.4,"3":97.7,"4":99.0,"5":97.7},"comments":["Ya que la música aunque es muy buena, por la distancia entre la jueza al bafle no se escucha bien.","Le hace falta más sonido a la música"],"det_comment":""},{"nps":96.5,"n":57,"promotores":55,"pasivos":2,"detractores":0,"pct_prom":96.5,"pct_det":0.0,"sat":9.92,"amab":10.0,"amb":9.95,"agil":9.79,"cal":9.95,"sede":"Bodega Villa Del Prado","zona":"Regional Centro","canal":"Bodega","negocio":"PROPIO","monthly":{"1":100.0,"2":100.0,"3":77.8,"5":100.0},"comments":["Excelente servicio Sergio","Sergio excelente servicio"],"det_comment":""},{"nps":96.4,"n":55,"promotores":53,"pasivos":2,"detractores":0,"pct_prom":96.4,"pct_det":0.0,"sat":9.77,"amab":9.78,"amb":9.73,"agil":9.73,"cal":9.84,"sede":"Bodega Calle 43","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":94.1,"3":100.0,"4":100.0,"5":87.5},"comments":["Bien servicio","Todo en orden"],"det_comment":""},{"nps":96.4,"n":139,"promotores":135,"pasivos":3,"detractores":1,"pct_prom":97.1,"pct_det":0.7,"sat":9.69,"amab":9.81,"amb":9.55,"agil":9.7,"cal":9.7,"sede":"Pub Andino","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":89.1,"2":100.0,"3":100.0,"4":100.0,"5":100.0},"comments":["Muy buen recomendación al volver y puedes preguntar por nattaly una excelente atención muy amable y linda te h","Siempre venimos a bbc andino nos gusta el lugar y siempre nos hacen sentir en casa me atendió nataly"],"det_comment":""},{"nps":95.8,"n":48,"promotores":46,"pasivos":2,"detractores":0,"pct_prom":95.8,"pct_det":0.0,"sat":9.89,"amab":10.0,"amb":9.75,"agil":9.88,"cal":9.94,"sede":"Bodega Tequendama","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":0.0,"5":97.9},"comments":["Buena atención","Servicio perfecto"],"det_comment":""},{"nps":95.2,"n":21,"promotores":20,"pasivos":1,"detractores":0,"pct_prom":95.2,"pct_det":0.0,"sat":10.0,"amab":10.0,"amb":10.0,"agil":10.0,"cal":10.0,"sede":"Bodega Lourdes","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":93.3,"4":100.0,"5":100.0},"comments":["Súper recomendado. Amo BBC","10. Super recomendado"],"det_comment":""},{"nps":94.9,"n":1407,"promotores":1361,"pasivos":20,"detractores":26,"pct_prom":96.7,"pct_det":1.8,"sat":9.73,"amab":9.86,"amb":9.65,"agil":9.72,"cal":9.68,"sede":"Pub Parque 93","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":98.0,"2":95.9,"3":89.5,"4":93.0,"5":97.3},"comments":["Si  Por qué es muy chevere para un rato agradable","Clarísimo que si"],"det_comment":"Que triste que ya sea la tercera vez que le suben a la cerveza, pero sirvan en vasos plásticos"},{"nps":94.1,"n":34,"promotores":33,"pasivos":0,"detractores":1,"pct_prom":97.1,"pct_det":2.9,"sat":9.82,"amab":10.0,"amb":9.38,"agil":9.91,"cal":10.0,"sede":"Bodega Bosa Centro","zona":"Regional Centro","canal":"Bodega","negocio":"PROPIO","monthly":{"1":87.5,"2":100.0,"3":100.0},"comments":["Volveria mil veces solo por el muchacho","Lo recomendaria por la atencion y por el aseo que hay pero ese sonifo esta una mierda \\n"],"det_comment":"Porque en la mitad de la mesa, hay un Sticker con el qr paraponer música, pero ingreso al QR y no sirve"},{"nps":93.9,"n":1053,"promotores":998,"pasivos":46,"detractores":9,"pct_prom":94.8,"pct_det":0.9,"sat":9.76,"amab":9.81,"amb":9.79,"agil":9.69,"cal":9.76,"sede":"Pub Plaza De Las Américas","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":97.4,"2":89.0,"3":92.4,"4":91.8,"5":97.8},"comments":["Muy amables las señoritas","Las instalaciones  la tranquilidad  la elegancia"],"det_comment":"No recomendaria la sede de plaza de las americas, la peor experiencia que he tenido en un bbc, me gusta mucho "},{"nps":93.5,"n":62,"promotores":59,"pasivos":2,"detractores":1,"pct_prom":95.2,"pct_det":1.6,"sat":9.7,"amab":9.71,"amb":9.66,"agil":9.66,"cal":9.76,"sede":"Bodega Restrepo","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":81.8,"2":100.0,"3":100.0,"4":100.0,"5":100.0},"comments":["Muy atento el muchacho","Buen servicio"],"det_comment":"El qr del sitio no deja seleccionar música"},{"nps":93.5,"n":62,"promotores":59,"pasivos":2,"detractores":1,"pct_prom":95.2,"pct_det":1.6,"sat":9.52,"amab":9.61,"amb":9.42,"agil":9.42,"cal":9.61,"sede":"Pub Bucaramanga","zona":"Santanderes","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":94.7,"2":71.4,"3":100.0,"4":100.0},"comments":["Excelente servicio el de Laura","Excelente servicio de Laura"],"det_comment":"Llega la hora de pagar y nos informan que no hay datáfono. Que hay actualización de todos los datáfonos. La ún"},{"nps":93.2,"n":103,"promotores":99,"pasivos":1,"detractores":3,"pct_prom":96.1,"pct_det":2.9,"sat":9.72,"amab":9.71,"amb":9.8,"agil":9.71,"cal":9.68,"sede":"Bodega Calle 67","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":95.6,"3":89.7,"4":100.0,"5":33.3},"comments":["Nai es una nota, muy buen servicio, muy buen lugar, pasamos muy divertidos entre música, cerveza buena y risas","Nos sentimos mal porque nos pidieron la cuenta de manera irrespetuosa sin por lo menos decirnos que van a cerr"],"det_comment":"Nos sentimos mal porque nos pidieron la cuenta de manera irrespetuosa sin por lo menos decirnos que van a cerr"},{"nps":93.0,"n":285,"promotores":271,"pasivos":8,"detractores":6,"pct_prom":95.1,"pct_det":2.1,"sat":9.73,"amab":9.75,"amb":9.73,"agil":9.67,"cal":9.77,"sede":"Pub Conecta","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":95.9,"2":90.0,"3":93.6,"4":94.4,"5":93.1},"comments":["Todo me pareció bien","Excelente servicio"],"det_comment":"Por que no hay opciones vegetarianas"},{"nps":92.9,"n":42,"promotores":40,"pasivos":1,"detractores":1,"pct_prom":95.2,"pct_det":2.4,"sat":9.59,"amab":9.79,"amb":9.21,"agil":9.57,"cal":9.79,"sede":"Bodega Aqua","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":0.0,"2":100.0,"3":100.0,"4":100.0,"5":87.5},"comments":["Un 10 en todo","Super atendidos con Daniela y su linda sonrisa"],"det_comment":"La atención no es buena, los meseros son prepotentes y odiosos, las mesas permanecen sucias y no están pendien"},{"nps":92.7,"n":55,"promotores":52,"pasivos":2,"detractores":1,"pct_prom":94.5,"pct_det":1.8,"sat":9.78,"amab":9.78,"amb":9.84,"agil":9.78,"cal":9.73,"sede":"Bodega Salitre","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":80.0,"4":100.0,"5":81.8},"comments":["Excelente servicio y amabilidad","Genial el servicio"],"det_comment":"Me gustó mucho asistir al BBC de Salitre, la comida muy rica y la cerveza también. Lo único que cambiaría y po"},{"nps":92.6,"n":27,"promotores":26,"pasivos":0,"detractores":1,"pct_prom":96.3,"pct_det":3.7,"sat":9.5,"amab":9.56,"amb":9.22,"agil":9.67,"cal":9.56,"sede":"Bodega Modelo","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":100.0,"4":-100.0,"5":100.0},"comments":["Súper formal todos","No hay variedad de ritmo de música"],"det_comment":"No hay variedad de ritmo de música"},{"nps":92.4,"n":157,"promotores":146,"pasivos":10,"detractores":1,"pct_prom":93.0,"pct_det":0.6,"sat":9.79,"amab":9.9,"amb":9.89,"agil":9.69,"cal":9.68,"sede":"Pub Usaquén","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":100.0,"2":95.1,"3":84.6,"4":97.0,"5":86.2},"comments":["Muy buen servicio","La música estuvo muy estridente en esta visita y no me permitía hablar cómodamente"],"det_comment":""},{"nps":92.2,"n":64,"promotores":61,"pasivos":1,"detractores":2,"pct_prom":95.3,"pct_det":3.1,"sat":9.68,"amab":9.58,"amb":9.72,"agil":9.72,"cal":9.72,"sede":"Bodega Portal Calle 80","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":94.7,"3":100.0,"4":100.0,"5":77.8},"comments":["Excelente      10","Buena atención, cordialidad y tiempo de servicio."],"det_comment":"Pésima atención"},{"nps":92.0,"n":212,"promotores":199,"pasivos":9,"detractores":4,"pct_prom":93.9,"pct_det":1.9,"sat":9.76,"amab":9.87,"amb":9.7,"agil":9.73,"cal":9.73,"sede":"Pub Salitre","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":90.9,"2":91.7,"3":89.7,"4":94.1,"5":96.6},"comments":["El ambiente y servicio en Salitre es muy bueno","10 porque si"],"det_comment":"Siempre se puede mejorar"},{"nps":91.8,"n":110,"promotores":103,"pasivos":5,"detractores":2,"pct_prom":93.6,"pct_det":1.8,"sat":9.73,"amab":9.78,"amb":9.75,"agil":9.62,"cal":9.78,"sede":"Bodega Calle 97","zona":"Regional Centro","canal":"Bodega","negocio":"PROPIO","monthly":{"1":100.0,"2":94.5,"3":86.1},"comments":["Porque quiero mi jarra","Jim me ayudó mucho"],"det_comment":"Gracias"},{"nps":91.8,"n":49,"promotores":45,"pasivos":4,"detractores":0,"pct_prom":91.8,"pct_det":0.0,"sat":9.57,"amab":9.51,"amb":9.51,"agil":9.63,"cal":9.63,"sede":"Bodega Imperial","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":85.2,"3":100.0,"5":100.0},"comments":["Me encantó la experiencia","Excelente servicio"],"det_comment":""},{"nps":91.8,"n":280,"promotores":261,"pasivos":15,"detractores":4,"pct_prom":93.2,"pct_det":1.4,"sat":9.59,"amab":9.67,"amb":9.55,"agil":9.59,"cal":9.55,"sede":"Pub Rosales","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":85.1,"2":87.3,"3":95.1,"4":95.3,"5":100.0},"comments":["Buenas comida , buen servicio,  buenas cervezas","Fredy siempre dispuesto ayudarnos  Muy amable y atento."],"det_comment":"Mario was so sweet, friendly n' attentive"},{"nps":91.2,"n":296,"promotores":279,"pasivos":8,"detractores":9,"pct_prom":94.3,"pct_det":3.0,"sat":9.58,"amab":9.7,"amb":9.42,"agil":9.54,"cal":9.65,"sede":"Pub Centro Mayor","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":94.2,"2":96.1,"3":80.5,"4":86.0,"5":88.2},"comments":["Excelente servicio","Buen servicio"],"det_comment":"Me. Gusta asistir a espacios BBC pero en esta  ocasión muy mal servicio la cerveza  estaba caliente y no tenía"},{"nps":91.2,"n":226,"promotores":209,"pasivos":14,"detractores":3,"pct_prom":92.5,"pct_det":1.3,"sat":9.61,"amab":9.69,"amb":9.59,"agil":9.58,"cal":9.58,"sede":"Pub Pepe Sierra","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":100.0,"2":86.4,"3":100.0,"4":89.7,"5":92.9},"comments":["10 excelente","Buen ambiente y buena cerveza"],"det_comment":"Deben estar más pendiente de la atención y no que los clientes deban ir a ustedes o en su defecto irse"},{"nps":90.9,"n":11,"promotores":10,"pasivos":1,"detractores":0,"pct_prom":90.9,"pct_det":0.0,"sat":9.73,"amab":10.0,"amb":8.91,"agil":10.0,"cal":10.0,"sede":"Bodega La Florida","zona":"Santanderes","canal":"Bodega","negocio":"PROPIO","monthly":{"4":100.0,"5":80.0},"comments":["Por la atención, por el espacio y el tipo de música, y por la cajica","Todo excelente"],"det_comment":""},{"nps":90.6,"n":202,"promotores":186,"pasivos":13,"detractores":3,"pct_prom":92.1,"pct_det":1.5,"sat":9.5,"amab":9.66,"amb":9.33,"agil":9.48,"cal":9.52,"sede":"Pub Avda 19","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":92.5,"2":87.0,"3":100.0,"4":84.1,"5":92.9},"comments":["Siempre la paso bien.","Muy buena la atención"],"det_comment":"El olor a agua residual era horrible y más aún cuando uno trata de comer algo"},{"nps":89.7,"n":126,"promotores":115,"pasivos":9,"detractores":2,"pct_prom":91.3,"pct_det":1.6,"sat":9.62,"amab":9.62,"amb":9.6,"agil":9.55,"cal":9.71,"sede":"Bodega Calle 93","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":87.3,"2":100.0,"3":72.7,"4":100.0,"5":90.0},"comments":["Buena atencion","Exelente servicio y amabilidad"],"det_comment":"Carlos es una persona muy grosera, que no nos brindo una experiencia agradable y nos acuso de no querer pagar"},{"nps":88.9,"n":18,"promotores":17,"pasivos":0,"detractores":1,"pct_prom":94.4,"pct_det":5.6,"sat":9.29,"amab":9.33,"amb":9.33,"agil":9.0,"cal":9.5,"sede":"Pub Centro Empresarial 127","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"3":100.0,"4":100.0,"5":33.3},"comments":["Pedimos una jarra de rubia y nos facturaron la cerveza mas cara, sin avisarnos que no habia la rubia normal y ","Lo recomiendo por música,  cerveza y comida"],"det_comment":"Pedimos una jarra de rubia y nos facturaron la cerveza mas cara, sin avisarnos que no habia la rubia normal y "},{"nps":88.7,"n":194,"promotores":178,"pasivos":10,"detractores":6,"pct_prom":91.8,"pct_det":3.1,"sat":9.33,"amab":9.52,"amb":9.35,"agil":9.13,"cal":9.3,"sede":"Pub Movistar Arena","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":81.2,"2":92.9,"3":62.5,"4":88.7,"5":95.8},"comments":["Muy lindas las meseras","Muy amables los meseros"],"det_comment":"Siempre que vengo al movistar a un concierto entro al BBC y siempre nos va mal . El personal asignado no es su"},{"nps":88.2,"n":153,"promotores":141,"pasivos":6,"detractores":6,"pct_prom":92.2,"pct_det":3.9,"sat":9.52,"amab":9.67,"amb":9.39,"agil":9.55,"cal":9.47,"sede":"Pub Titan","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":85.7,"2":80.0,"3":89.6,"4":100.0,"5":100.0},"comments":["Muy amable el servicio excelente actitud Laura Camila Castelvi","Muy antentos"],"det_comment":"Se olvidaron de la mitad del pedido y no se puede escoger la música"},{"nps":88.0,"n":158,"promotores":142,"pasivos":13,"detractores":3,"pct_prom":89.9,"pct_det":1.9,"sat":9.38,"amab":9.39,"amb":9.35,"agil":9.37,"cal":9.41,"sede":"Pub Colina","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":87.9,"4":100.0},"comments":["Los productos","Excelente sitio"],"det_comment":"Mala música"},{"nps":86.7,"n":15,"promotores":14,"pasivos":0,"detractores":1,"pct_prom":93.3,"pct_det":6.7,"sat":9.35,"amab":9.4,"amb":9.4,"agil":9.2,"cal":9.4,"sede":"Bodega Cartago","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":100.0,"4":0.0},"comments":["Por la atención y a amabilidad de sus colaboradores, especial mente de Lorena, atenta, formal y muy comprometi","HORRIBLE la música, ni siquiera era conocida, no permiten que uno pida una canción pero tampoco ponen música b"],"det_comment":"HORRIBLE la música, ni siquiera era conocida, no permiten que uno pida una canción pero tampoco ponen música b"},{"nps":86.3,"n":51,"promotores":46,"pasivos":3,"detractores":2,"pct_prom":90.2,"pct_det":3.9,"sat":9.54,"amab":9.76,"amb":9.18,"agil":9.65,"cal":9.59,"sede":"Bodega Pasadena","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":50.0,"2":75.0,"3":100.0,"4":100.0,"5":100.0},"comments":["Nos sentimos consentidos con la remodelación que están haciendo, gracias ??","Buen servício"],"det_comment":"Todo bien el servicio"},{"nps":85.7,"n":7,"promotores":6,"pasivos":1,"detractores":0,"pct_prom":85.7,"pct_det":0.0,"sat":9.68,"amab":10.0,"amb":9.14,"agil":10.0,"cal":9.57,"sede":"Bodega Javeriana","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"3":100.0,"4":0.0},"comments":["Que vuelva el QR musical","Siempre buen servicio"],"det_comment":""},{"nps":85.2,"n":27,"promotores":24,"pasivos":2,"detractores":1,"pct_prom":88.9,"pct_det":3.7,"sat":9.33,"amab":9.67,"amb":9.11,"agil":9.22,"cal":9.33,"sede":"Bodega Chico","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":83.3,"2":85.7},"comments":["Mejor experiencia con Fredy","No encendieron un calefactor,\\nSolo hay un baño para hombres."],"det_comment":"Ya no es lo era antes"},{"nps":82.9,"n":35,"promotores":31,"pasivos":2,"detractores":2,"pct_prom":88.6,"pct_det":5.7,"sat":9.36,"amab":9.4,"amb":9.57,"agil":9.14,"cal":9.31,"sede":"Pub Cedritos","zona":"Regional Centro","canal":"Pub","negocio":"PROPIO","monthly":{"1":100.0,"2":92.6,"3":33.3,"4":-100.0,"5":100.0},"comments":["Lo recomiendo 100% lo único que me gustaría que cambiara sería que también de vasos pequeños no solamente las ","Me hicieron un cargo doble a la tarjeta y la chica lo hizo totalmente adrede y no me dejó ver la transacción"],"det_comment":"Me hicieron un cargo doble a la tarjeta y la chica lo hizo totalmente adrede y no me dejó ver la transacción"},{"nps":82.6,"n":23,"promotores":21,"pasivos":0,"detractores":2,"pct_prom":91.3,"pct_det":8.7,"sat":9.32,"amab":9.35,"amb":9.22,"agil":9.35,"cal":9.35,"sede":"Bodega Unicentro Occidente","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"3":81.0,"4":100.0},"comments":["La cerveza es deliciosa!","Excelente servicio"],"det_comment":"No había carta de comida, nada disponible y el chico cobró el servicio si. Aviso previo"},{"nps":80.0,"n":5,"promotores":4,"pasivos":1,"detractores":0,"pct_prom":80.0,"pct_det":0.0,"sat":9.4,"amab":9.4,"amb":9.4,"agil":9.4,"cal":9.4,"sede":"Bodega Calle 100 WTC","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"2":100.0,"3":66.7,"5":100.0},"comments":["Buenos productos, buena atención","Me encantan sus cervezas!"],"det_comment":""},{"nps":77.8,"n":9,"promotores":8,"pasivos":0,"detractores":1,"pct_prom":88.9,"pct_det":11.1,"sat":8.83,"amab":8.67,"amb":8.67,"agil":8.67,"cal":9.33,"sede":"Bodega La Candelaria","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":-100.0,"4":100.0},"comments":["No lo recomiendo por la mala  atención, y porque los televisores no funcionan correctamente para ver un partid","El ambiente en general muy chévere y los meseros muy amables"],"det_comment":"No lo recomiendo por la mala  atención, y porque los televisores no funcionan correctamente para ver un partid"},{"nps":77.3,"n":22,"promotores":19,"pasivos":1,"detractores":2,"pct_prom":86.4,"pct_det":9.1,"sat":9.22,"amab":9.18,"amb":9.18,"agil":9.18,"cal":9.32,"sede":"Bodega Armenia","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":80.0,"3":66.7,"4":100.0,"5":50.0},"comments":["Buena música, sillas cómodas y ambiente chévere, el mesero nos explicó bien el menú y muy amable","Muy rápido el servicio, buena música y las alas muy ricas"],"det_comment":"Lo recomendaría mientras aprenda el manager a tratar a los clientes porque no da soluciones y fuera de eso se "},{"nps":75.0,"n":12,"promotores":10,"pasivos":1,"detractores":1,"pct_prom":83.3,"pct_det":8.3,"sat":9.5,"amab":10.0,"amb":8.5,"agil":9.75,"cal":9.75,"sede":"Bodega Calle 90","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"3":50.0,"4":100.0,"5":75.0},"comments":["El barman es muy lindo","Por todas las cosas que dije del ambiente, comida precio y espacio, el servicio del bartender es lo único que "],"det_comment":"Por todas las cosas que dije del ambiente, comida precio y espacio, el servicio del bartender es lo único que "},{"nps":75.0,"n":8,"promotores":7,"pasivos":0,"detractores":1,"pct_prom":87.5,"pct_det":12.5,"sat":9.06,"amab":8.88,"amb":9.62,"agil":8.88,"cal":8.88,"sede":"Bodega Río Cali","zona":"Regional Sur","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"3":71.4},"comments":["Buena ubicación, excelente variedad, y muy buen servicio de Melissa","Por la atención y la música"],"det_comment":"No quisiera que nadie tuviera esta experiencia. Incluso lamento haber llevado a mis amigos"},{"nps":75.0,"n":20,"promotores":16,"pasivos":3,"detractores":1,"pct_prom":80.0,"pct_det":5.0,"sat":8.88,"amab":9.1,"amb":8.5,"agil":8.95,"cal":8.95,"sede":"Pub Calle 19","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":66.7,"2":75.0,"3":100.0,"4":100.0,"5":0.0},"comments":["Muy buen servicio","Esta calificación va para la sede del mall plaza. El servicio deja mucho que desear, las personas no están pen"],"det_comment":"Esta calificación va para la sede del mall plaza. El servicio deja mucho que desear, las personas no están pen"},{"nps":73.9,"n":23,"promotores":20,"pasivos":0,"detractores":3,"pct_prom":87.0,"pct_det":13.0,"sat":9.32,"amab":9.22,"amb":9.35,"agil":9.35,"cal":9.35,"sede":"Bodega Calle 165","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"2":-100.0,"3":90.5,"4":-100.0},"comments":["Es muy cómodo y acogedor","La atención del chico de la barra excelente, es agradable siempre ir allá es agradable, gracias por hacerme se"],"det_comment":"Música muy mala se duerme uno"},{"nps":72.5,"n":51,"promotores":41,"pasivos":6,"detractores":4,"pct_prom":80.4,"pct_det":7.8,"sat":9.06,"amab":9.18,"amb":8.94,"agil":9.18,"cal":8.94,"sede":"Bodega Palmira","zona":"Regional Sur","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":75.0,"2":80.0,"3":53.3,"4":90.9,"5":75.0},"comments":["Excelente lugar y servicio, Julián un tipazo","Que pusieran más BBC en a Palmira y más oferta de comida"],"det_comment":"La comida para mí es lo más importante , comer debe ser agradable"},{"nps":71.4,"n":21,"promotores":16,"pasivos":4,"detractores":1,"pct_prom":76.2,"pct_det":4.8,"sat":8.82,"amab":9.0,"amb":8.57,"agil":8.71,"cal":9.0,"sede":"Pub Chapinero","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"1":100.0,"2":100.0,"3":100.0,"4":75.0,"5":25.0},"comments":["Mala atención","Mejoraría la música y las opciones de cerveza"],"det_comment":"Mala atención"},{"nps":66.7,"n":9,"promotores":7,"pasivos":1,"detractores":1,"pct_prom":77.8,"pct_det":11.1,"sat":9.58,"amab":10.0,"amb":9.0,"agil":9.67,"cal":9.67,"sede":"Bodega Pereira","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":-50.0,"2":100.0,"3":100.0},"comments":["Excelente atención de Cristina y Alex","En resumen su atención fue excelente, que lugar tan maravilloso!"],"det_comment":"Por la gonorrra de música"},{"nps":63.6,"n":11,"promotores":8,"pasivos":2,"detractores":1,"pct_prom":72.7,"pct_det":9.1,"sat":9.39,"amab":9.45,"amb":8.64,"agil":9.73,"cal":9.73,"sede":"Bodega La 70","zona":"Regional Andes","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":50.0,"2":-100.0,"5":87.5},"comments":["Excelente sercicio","A pesar de que la calidad de los productos y la atención fue buena. Cobran de más en la cuenta, la primera vez"],"det_comment":"A pesar de que la calidad de los productos y la atención fue buena. Cobran de más en la cuenta, la primera vez"},{"nps":61.5,"n":13,"promotores":9,"pasivos":3,"detractores":1,"pct_prom":69.2,"pct_det":7.7,"sat":8.15,"amab":9.31,"amb":5.38,"agil":8.85,"cal":9.08,"sede":"Pub Barranquilla Cantor Company","zona":"Regional Norte","canal":"Pub","negocio":"PROPIO","monthly":{"1":-50.0,"2":100.0,"3":100.0,"4":66.7,"5":83.3},"comments":["Mejor música y servicio más rápido","Excelente cerveza y servicio"],"det_comment":""},{"nps":60.0,"n":5,"promotores":4,"pasivos":0,"detractores":1,"pct_prom":80.0,"pct_det":20.0,"sat":8.5,"amab":8.8,"amb":8.8,"agil":8.8,"cal":7.6,"sede":"Bodega San Fernando","zona":"Regional Sur","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":100.0,"3":-100.0,"5":100.0},"comments":["Recomiendo el sitio. Linda nos brindo un servicio excelente","Excelente servicio y productos"],"det_comment":"No dan vasos fríos y no dan pruebas"},{"nps":57.1,"n":14,"promotores":11,"pasivos":0,"detractores":3,"pct_prom":78.6,"pct_det":21.4,"sat":8.66,"amab":8.5,"amb":8.5,"agil":8.93,"cal":8.71,"sede":"Bodega Gran Estación","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":20.0,"2":100.0,"3":66.7,"4":100.0},"comments":["Very good place to drink!!!","El mejor servicio"],"det_comment":"No cobraron una jarra de cerveza roja en vez de la negra. Por lo que el valor total no coincide con lo que ped"},{"nps":55.6,"n":9,"promotores":6,"pasivos":2,"detractores":1,"pct_prom":66.7,"pct_det":11.1,"sat":7.67,"amab":5.0,"amb":9.0,"agil":8.0,"cal":8.67,"sede":"Bodega Granada","zona":"Regional Sur","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":0.0,"2":0.0,"3":75.0,"4":100.0},"comments":["Atención excelente , todo super , de verdad las muchachas muy serviciales","Solo por la atención de Karol y las otras chicas por que Jhon no sirve"],"det_comment":"El peor servicio que hemos recibido en todos los BBC a los que asistimos. No tiene sentido la calidad del serv"},{"nps":55.6,"n":9,"promotores":7,"pasivos":0,"detractores":2,"pct_prom":77.8,"pct_det":22.2,"sat":8.92,"amab":8.0,"amb":9.33,"agil":8.67,"cal":9.67,"sede":"Pub Villa Del Rio","zona":"Regional Centro","canal":"Pub","negocio":"FRANQUICIA","monthly":{"2":100.0,"3":0.0,"4":100.0,"5":100.0},"comments":["Porque la información no fue clara nos dijeron vale de 90 a 100 mil y terminamos pagando 180, aparte el vaso s","No los recomiendo por deshonestidad en los precios, publicidad engañosa al cliente"],"det_comment":"Porque la información no fue clara nos dijeron vale de 90 a 100 mil y terminamos pagando 180, aparte el vaso s"},{"nps":16.7,"n":6,"promotores":3,"pasivos":1,"detractores":2,"pct_prom":50.0,"pct_det":33.3,"sat":7.38,"amab":7.0,"amb":7.0,"agil":7.0,"cal":8.5,"sede":"Bodega Calle 109","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"2":100.0,"3":50.0,"4":-100.0,"5":100.0},"comments":["Es un espacio agradable y la atención por parte de Jennifer excelente atenta y ágil.","El personal es deficiente."],"det_comment":"El personal es deficiente."},{"nps":16.7,"n":6,"promotores":3,"pasivos":1,"detractores":2,"pct_prom":50.0,"pct_det":33.3,"sat":7.88,"amab":7.0,"amb":7.5,"agil":8.0,"cal":9.0,"sede":"Bodega Soacha Terreros","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"2":-100.0,"3":100.0,"4":100.0,"5":0.0},"comments":["Dicen un precio al sentarnos y otro al momento de pagar, las tarifas no son claras por el personal","Hace falta la personalización de los clientes de la música por supuesto en el marco del formato de la franquic"],"det_comment":"Dicen un precio al sentarnos y otro al momento de pagar, las tarifas no son claras por el personal"},{"nps":14.3,"n":7,"promotores":3,"pasivos":2,"detractores":2,"pct_prom":42.9,"pct_det":28.6,"sat":7.86,"amab":9.14,"amb":7.0,"agil":8.29,"cal":7.0,"sede":"Bodega Unicentro","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":-100.0,"2":100.0,"3":100.0,"4":0.0,"5":0.0},"comments":["La música. La comodidad del lugar","Son señores de venezuela y vinieron muchas personas a hacer sentir como si fuera su casa, hablar duro y groser"],"det_comment":"Precios desactualizados de la carta"},{"nps":-20.0,"n":5,"promotores":2,"pasivos":0,"detractores":3,"pct_prom":40.0,"pct_det":60.0,"sat":8.8,"amab":10.0,"amb":8.2,"agil":9.4,"cal":7.6,"sede":"Bodega Calle 140","zona":"Regional Centro","canal":"Bodega","negocio":"FRANQUICIA","monthly":{"1":0.0,"2":-33.3},"comments":["Pesi alas y realmente fueron muy malas, insípida, sin sabor, no nos gustó a ninguno, no fue opinión única,  el","Deberían dejar poner música"],"det_comment":"Pesi alas y realmente fueron muy malas, insípida, sin sabor, no nos gustó a ninguno, no fue opinión única,  el"}],"words":{"all":[["servicio",1073],["atención",753],["buen",708],["excelente",698],["buena",676],["ambiente",461],["todo",425],["lugar",385],["música",267],["cerveza",242],["comida",221],["agradable",202],["amable",159],["bueno",152],["siempre",151],["recomiendo",137],["súper",133],["porque",128],["gustó",119],["experiencia",116],["mucho",112],["sitio",112],["amigos",108],["personal",107],["gracias",105],["mejor",103],["super",98],["gusta",98],["atendió",96],["rica",91],["amables",80],["rico",79],["compartir",77],["estuvo",76],["espacio",73]],"prom":[["servicio",1024],["atención",724],["excelente",689],["buen",678],["buena",650],["ambiente",441],["todo",399],["lugar",360],["música",224],["cerveza",215],["agradable",193],["comida",190],["amable",157],["bueno",142],["siempre",140],["recomiendo",132],["súper",131],["gustó",113],["porque",111],["sitio",106],["gracias",102],["amigos",102],["mejor",101],["experiencia",100],["atendió",95]],"det":[["servicio",28],["atención",24],["música",20],["cerveza",17],["comida",15],["todo",14],["experiencia",11],["porque",11],["personal",10],["solo",10],["nada",10],["mala",9],["mucho",9],["meseros",9],["buena",9],["baño",9],["calidad",8],["pagar",7],["pedido",7],["minutos",7]]},"staff_pos":[{"nombre":"Paula / Paula Báez","sede":"Pub Parque 93 · Pub Chapinero","zona":"Regional Centro","negocio":"PROPIO","menciones":12,"cita":"Nos atendió Paula y fue un excelente servicio. Paula Báez muy atenta."},{"nombre":"Mario","sede":"Pub Rosales · Pub Pepe Sierra","zona":"Regional Centro","negocio":"FRANQUICIA","menciones":7,"cita":"Excelente atención. Me atendió Mario. Siempre estuvo pendiente de la mesa."},{"nombre":"Geraldine","sede":"Pub Galerías","zona":"Regional Centro","negocio":"PROPIO","menciones":5,"cita":"No me gusta ir si no está Geraldine. Definitivamente la mejor."},{"nombre":"Mapu","sede":"Pub Parque 93","zona":"Regional Centro","negocio":"PROPIO","menciones":3,"cita":"Muchas gracias Mapu por recomendar la Mixiripa."},{"nombre":"Dary","sede":"Pub Galerías","zona":"Regional Centro","negocio":"PROPIO","menciones":3,"cita":"Dary es la mejor mesera, siempre muy atenta y con buena actitud."},{"nombre":"Sara","sede":"Pub Calle 85","zona":"Regional Centro","negocio":"PROPIO","menciones":3,"cita":"Pregunten por Sara, ¡es la mejor!"},{"nombre":"Nataly","sede":"Pub Andino","zona":"Regional Centro","negocio":"PROPIO","menciones":3,"cita":"Muy buen recomendación al volver y puedes preguntar por Nataly."},{"nombre":"Alexandra","sede":"Pub Rosales","zona":"Regional Centro","negocio":"FRANQUICIA","menciones":2,"cita":"Nos ilustró muy bien la carta. Excelente servicio de Alexandra."},{"nombre":"Luchito + Yuri","sede":"Bodega Park Way","zona":"Regional Centro","negocio":"FRANQUICIA","menciones":2,"cita":"Luchito muy especial siempre nos hace reír. Yuri la mesera más amable."},{"nombre":"Sergio","sede":"Bodega Villa Del Prado","zona":"Regional Centro","negocio":"PROPIO","menciones":2,"cita":"Excelente servicio Sergio."},{"nombre":"Gabriela","sede":"Pub San Martin","zona":"Regional Centro","negocio":"PROPIO","menciones":1,"cita":"Gabriela nos atendió de maravilla."},{"nombre":"Fredy","sede":"Pub Rosales · Bodega Chico","zona":"Regional Centro","negocio":"FRANQUICIA","menciones":2,"cita":"Fredy siempre dispuesto a ayudarnos."},{"nombre":"Laura","sede":"Pub Bucaramanga","zona":"Santanderes","negocio":"FRANQUICIA","menciones":2,"cita":"Excelente servicio el de Laura."},{"nombre":"Lorena","sede":"Bodega Cartago","zona":"Regional Andes","negocio":"FRANQUICIA","menciones":1,"cita":"Atenta, formal y muy comprometida con la empresa."},{"nombre":"Daniela","sede":"Bodega Aqua · Bodega Ciudad del Rio","zona":"Regional Andes","negocio":"FRANQUICIA","menciones":2,"cita":"Super atendidos con Daniela y su linda sonrisa."},{"nombre":"Sandra López","sede":"Bodega Estudiantes (Pasto)","zona":"Regional Sur","negocio":"PROPIO","menciones":1,"cita":"Una gratitud especial a Sandra López ❤️ excelente atención."},{"nombre":"Karen","sede":"Pub Strada (Medellín)","zona":"Regional Andes","negocio":"FRANQUICIA","menciones":2,"cita":"Me encantó el servicio de Karen, demasiado amable y buena gente."},{"nombre":"Sebastián","sede":"Bodega Jardín Plaza (Cali)","zona":"Regional Sur","negocio":"FRANQUICIA","menciones":2,"cita":"Sebastian es el mejor del mundo mundial."}],"staff_neg":[{"nombre":"Carlos","sede":"Bodega Calle 93","zona":"Regional Centro","negocio":"FRANQUICIA","gravedad":"CRÍTICO","cita":"Carlos es muy grosero, nos acusó de no querer pagar."},{"nombre":"Cajera s/n","sede":"Pub Salitre","zona":"Regional Centro","negocio":"PROPIO","gravedad":"CRÍTICO","cita":"Nos dijo que estábamos estorbando. Obliga a pagar propina."},{"nombre":"Cajera s/n (cobro doble)","sede":"Pub Cedritos","zona":"Regional Centro","negocio":"PROPIO","gravedad":"URGENTE","cita":"Cargo doble a la tarjeta adrede y no me dejó ver la transacción."},{"nombre":"Manager s/n","sede":"Bodega Armenia","zona":"Regional Andes","negocio":"FRANQUICIA","gravedad":"ALTO","cita":"No da soluciones y se ríe de las sugerencias de los clientes."},{"nombre":"Nicolás","sede":"Pub Calle 85","zona":"Regional Centro","negocio":"PROPIO","gravedad":"MEDIO","cita":"Nos negó la cerveza Cajica y las empanadas siendo las 11:30PM."},{"nombre":"Mesera s/n cabello rojo","sede":"Pub Galerías","zona":"Regional Centro","negocio":"PROPIO","gravedad":"MEDIO","cita":"La mesera del cabello rojo nos miró mal."},{"nombre":"Jhon","sede":"Bodega Granada (Cali)","zona":"Regional Sur","negocio":"FRANQUICIA","gravedad":"MEDIO","cita":"Solo por la atención de Karol porque Jhon no sirve."},{"nombre":"Personal Palmira","sede":"Bodega Palmira","zona":"Regional Sur","negocio":"FRANQUICIA","gravedad":"CRÍTICO","cita":"Las trabajadoras super groseras, antipáticas."},{"nombre":"Meseros genéricos","sede":"Pub Titan · Pub Salitre","zona":"Regional Centro","negocio":"PROPIO","gravedad":"MEDIO","cita":"Los meseros se preocupan más de hablar entre ellos."}]};
+
+// ── HELPERS ──
+const nc=(v)=>v>=90?'var(--t)':v>=80?'var(--ye)':'var(--re)';
+const npc=(v)=>v>=90?'top':v>=80?'mid':'low';
+const dc=(v)=>v>=9.8?'var(--t)':v>=9.5?'var(--gr)':v>=9.0?'var(--ye)':'var(--re)';
+function alert_bdg(s){
+  if(s.nps<0||s.pct_det>20)return '<span class="bdg br">🔴 CRÍTICA</span>';
+  if(s.nps<70||s.pct_det>10)return '<span class="bdg br">🔴 ROJA</span>';
+  if(s.nps<85||s.pct_det>5)return '<span class="bdg by">🟡 OBS.</span>';
+  if(s.nps>=97&&s.pct_det===0&&s.n>=50)return '<span class="bdg bpu">⭐ MODELO</span>';
+  return '<span class="bdg bg">🟢 OK</span>';
+}
+
+// ── ZONE CARDS ──
+function buildZoneCards(){
+  const con=document.getElementById('zona-cards-container');
+  let html='';
+  for(const[zk,zd] of Object.entries(D.zonas)){
+    const c=nc(zd.nps);
+    const ms=zd.monthly||[];
+    const maxH=40;
+    const minV=Math.min(...ms.map(m=>m.nps));
+    const maxV=Math.max(...ms.map(m=>m.nps));
+    const range=Math.max(maxV-minV,10);
+    let bars='';
+    ms.forEach(m=>{
+      const h=Math.max(((m.nps-minV)/range)*maxH+4,2);
+      const bc=nc(m.nps);
+      bars+=`<div class="mini-bar" style="height:${h}px;background:${bc};flex:1;"><div class="mini-bar-tip">${m.mes}: ${m.nps}</div></div>`;
+    });
+    // Canal pills
+    const pub=zd.pub?`<div class="canal-pill"><div class="canal-pill-lbl">Pub</div><div class="canal-pill-val" style="color:var(--t);">${zd.pub.nps}</div><div class="canal-pill-n">n=${zd.pub.n.toLocaleString('es')}</div></div>`:'<div class="canal-pill"><div class="canal-pill-lbl">Pub</div><div class="canal-pill-val" style="color:var(--mu);">—</div></div>';
+    const bod=zd.bodega?`<div class="canal-pill"><div class="canal-pill-lbl">Bodega</div><div class="canal-pill-val" style="color:var(--ye);">${zd.bodega.nps}</div><div class="canal-pill-n">n=${zd.bodega.n.toLocaleString('es')}</div></div>`:'<div class="canal-pill"><div class="canal-pill-lbl">Bodega</div><div class="canal-pill-val" style="color:var(--mu);">—</div></div>';
+    // Propio / Franquicia pills
+    const prop=zd.propio?`<div class="canal-pill" style="border:1px solid rgba(63,185,80,.2);background:rgba(63,185,80,.06);"><div class="canal-pill-lbl">Propio BBC</div><div class="canal-pill-val" style="color:var(--gr);font-size:18px;">${zd.propio.nps}</div><div class="canal-pill-n">n=${zd.propio.n.toLocaleString('es')} · Det ${zd.propio.pct_det}%</div></div>`:'';
+    const fran=zd.franquicia?`<div class="canal-pill" style="border:1px solid rgba(181,123,255,.2);background:rgba(181,123,255,.06);"><div class="canal-pill-lbl">Franquicia</div><div class="canal-pill-val" style="color:var(--pu);font-size:18px;">${zd.franquicia.nps}</div><div class="canal-pill-n">n=${zd.franquicia.n.toLocaleString('es')} · Det ${zd.franquicia.pct_det}%</div></div>`:'';
+    html+=`<div class="zcard">
+      <div class="zcard-head">
+        <div><div class="zcard-name">${zk}</div><div class="zcard-sub">n=${zd.n.toLocaleString('es')} · ${zd.pct_prom}% promotores</div></div>
+        <div class="zcard-nps" style="color:${c};">${zd.nps}</div>
+      </div>
+      <div class="zcard-body">
+        <div class="zcard-row"><span class="zcard-lbl">Satisfacción</span><span class="zcard-val" style="color:${dc(zd.sat)}">${zd.sat}</span></div>
+        <div class="zcard-row"><span class="zcard-lbl">Amabilidad</span><span class="zcard-val" style="color:${dc(zd.amab)}">${zd.amab}</span></div>
+        <div class="zcard-row"><span class="zcard-lbl">Ambiente</span><span class="zcard-val" style="color:${dc(zd.amb)}">${zd.amb}</span></div>
+        <div class="zcard-row"><span class="zcard-lbl">% Detractores</span><span class="zcard-val" style="color:${zd.pct_det>5?'var(--re)':zd.pct_det>2?'var(--ye)':'var(--t)'}">${zd.pct_det}%</span></div>
+        <div class="zcard-divider"></div>
+        <div class="zcard-canal-row" style="margin-bottom:6px;">${prop}${fran}</div>
+        <div class="zcard-canal-row">${pub}${bod}</div>
+      </div>
+      <div class="zcard-trend">
+        <div class="zcard-trend-lbl">Tendencia mensual NPS</div>
+        <div class="mini-trend">${bars}</div>
+      </div>
+    </div>`;
+  }
+  con.innerHTML=html;
+}
+
+// ── HIGHLIGHTS ──
+function buildHighlights(){
+  const good=document.getElementById('hl-good');
+  const bad=document.getElementById('hl-bad');
+  const sedes=[...D.sedes].filter(s=>s.n>=15);
+  const top=sedes.slice(0,5);
+  const bot=[...sedes].sort((a,b)=>a.nps-b.nps).slice(0,6);
+  good.innerHTML='';bad.innerHTML='';
+  top.forEach(s=>{
+    good.innerHTML+=`<div class="hlitem">
+      <div class="hlitem-top">
+        <span class="hlitem-sede">${s.sede} · ${s.zona} · <span class="bdg ${s.canal==='Pub'?'bp':'bb'}">${s.canal}</span></span>
+        <span class="hlitem-nps" style="color:var(--t);">${s.nps}</span>
+      </div>
+      <div class="hlitem-body">Sat ${s.sat} · ${s.n} enc. · Det ${s.pct_det}% · ${s.comments[0]||''}</div>
+    </div>`;
+  });
+  bot.forEach(s=>{
+    const cls=s.nps<70?'bad':'warn';
+    bad.innerHTML+=`<div class="hlitem ${cls}">
+      <div class="hlitem-top">
+        <span class="hlitem-sede">${s.sede} · ${s.zona} · <span class="bdg ${s.canal==='Pub'?'bp':'bb'}">${s.canal}</span></span>
+        <span class="hlitem-nps" style="color:${s.nps<70?'var(--re)':'var(--ye)'};">${s.nps}</span>
+      </div>
+      <div class="hlitem-body">${s.detractores} detractores (${s.pct_det}%) · ${s.n} enc. · ${s.comments[0]||''}</div>
+    </div>`;
+  });
+}
+
+// ── GLOBAL TREND ──
+function buildGlobalTrend(){
+  const el=document.getElementById('global-trend');
+  const leg=document.getElementById('global-trend-leg');
+  const maxN=Math.max(...D.monthly.map(m=>m.n));
+  el.innerHTML='';leg.innerHTML='';
+  D.monthly.forEach(m=>{
+    const h=Math.round((m.nps/100)*72)+4;
+    const c=nc(m.nps);
+    el.innerHTML+=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+      <div style="height:${h}px;width:100%;background:${c};border-radius:3px 3px 0 0;opacity:.85;position:relative;cursor:default;">
+        <div style="display:none;position:absolute;bottom:calc(100%+3px);left:50%;transform:translateX(-50%);background:var(--d3);border:1px solid var(--tb);border-radius:3px;padding:2px 6px;font-family:var(--fm);font-size:9px;white-space:nowrap;color:var(--t);z-index:10;" class="gtt">${m.mes}: ${m.nps} · n=${m.n.toLocaleString('es')}</div>
+      </div>
+      <div style="font-family:var(--fm);font-size:9px;color:var(--mu);">${m.mes}</div>
+      <div style="font-family:var(--fm);font-size:9px;color:${c};">${m.nps}</div>
+    </div>`;
+  });
+  el.querySelectorAll('div[style*="height"]>div').forEach(d=>{
+    d.parentElement.addEventListener('mouseenter',()=>d.style.display='block');
+    d.parentElement.addEventListener('mouseleave',()=>d.style.display='none');
+  });
+}
+
+// ── TABLE ──
+let AZ='Todas',AC='Todos',AN='Todos',SK='nps',SD=-1;
+function setZ(z,btn){AZ=z;document.querySelectorAll('.navtabs~.sec .chip').forEach(c=>{if(['Todas','Regional Centro','Regional Andes','Regional Sur','Santanderes','Regional Norte'].includes(c.textContent))c.classList.remove('on');});btn.classList.add('on');renderTable();}
+function setC(c,btn){AC=c;document.querySelectorAll('.navtabs~.sec .chip').forEach(ch=>{if(['Todos','Pub','Bodega'].includes(ch.textContent))ch.classList.remove('on');});btn.classList.add('on');renderTable();}
+function setN(n,btn){AN=n;document.querySelectorAll('.navtabs~.sec .chip').forEach(ch=>{if(['Todos','Propio BBC','Franquicia'].includes(ch.textContent))ch.classList.remove('on');});btn.classList.add('on');renderTable();}
+function srt(k){if(SK===k)SD*=-1;else{SK=k;SD=-1;}document.querySelectorAll('#pdvtable thead th').forEach(th=>{th.classList.remove('sa','sd');});const keys=['sede','zona','canal','nps','n','sat','amab','amb','agil','pct_det','_sp','_cm','_al'];const i=keys.indexOf(k);if(i>=0)document.querySelectorAll('#pdvtable thead th')[i].classList.add(SD>0?'sa':'sd');renderTable();}
+function renderTable(){
+  const q=(document.getElementById('srch')?.value||'').toLowerCase();
+  let sedes=D.sedes.filter(s=>{
+    if(AZ!=='Todas'&&s.zona!==AZ)return false;
+    if(AC!=='Todos'&&s.canal!==AC)return false;
+    if(AN!=='Todos'&&s.negocio!==AN)return false;
+    if(q&&!s.sede.toLowerCase().includes(q)&&!s.zona.toLowerCase().includes(q))return false;
+    return true;
+  });
+  sedes.sort((a,b)=>{let av=a[SK],bv=b[SK];if(typeof av==='string')av=av.toLowerCase(),bv=bv.toLowerCase();return SD*(av<bv?-1:av>bv?1:0);});
+  const tbody=document.getElementById('tbody');
+  tbody.innerHTML='';
+  sedes.forEach(s=>{
+    const ms=s.monthly||{};
+    const sparkBars=[1,2,3,4,5].map(k=>{
+      if(ms[k]===undefined)return`<div class="sparkb" style="height:3px;background:rgba(255,255,255,.06);"></div>`;
+      const h=Math.max(Math.abs(ms[k])/100*20,2);
+      return`<div class="sparkb" style="height:${h}px;background:${nc(ms[k])};" title="${k}:${ms[k]}"></div>`;
+    }).join('');
+    const cm=s.comments&&s.comments[0]?s.comments[0]:'—';
+    const negBdg=s.negocio==='PROPIO'?'<span class="bdg bg">Propio</span>':'<span class="bdg bpu">Franquicia</span>';
+    tbody.innerHTML+=`<tr>
+      <td><strong style="color:#fff">${s.sede}</strong></td>
+      <td style="color:var(--mu);font-size:11px;">${s.zona.replace('Regional ','')}</td>
+      <td>${negBdg}</td>
+      <td><span class="bdg ${s.canal==='Pub'?'bp':'bb'}">${s.canal}</span></td>
+      <td><span class="npsp ${npc(s.nps)}">${s.nps}</span></td>
+      <td style="font-family:var(--fm);color:var(--mu);">${s.n}</td>
+      <td style="font-family:var(--fm);color:${dc(s.sat)}">${s.sat}</td>
+      <td style="font-family:var(--fm);color:${dc(s.amab)}">${s.amab}</td>
+      <td style="font-family:var(--fm);color:${dc(s.amb)}">${s.amb}</td>
+      <td style="font-family:var(--fm);color:${dc(s.agil)}">${s.agil}</td>
+      <td style="font-family:var(--fm);color:${s.pct_det>5?'var(--re)':s.pct_det>2?'var(--ye)':'var(--t)'}">${s.pct_det}%</td>
+      <td><div class="spark">${sparkBars}</div></td>
+      <td style="font-size:11px;font-style:italic;color:var(--mu);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${cm.replace(/"/g,"'")}">${cm}</td>
+      <td>${alert_bdg(s)}</td>
+    </tr>`;
+  });
+  const cnt=sedes.length;
+  document.getElementById('rcnt').textContent=`${cnt} sedes`;
+}
+
+// ── WORD CLOUDS ──
+function buildWordCloud(id, words, isPos){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const maxC=words[0][1];
+  let html='';
+  words.forEach(([w,c])=>{
+    const ratio=c/maxC;
+    const sz=Math.round(10+ratio*14);
+    const op=0.5+ratio*0.5;
+    const bg=isPos===true?`rgba(0,181,163,${0.08+ratio*0.15})`:isPos===false?`rgba(255,74,74,${0.08+ratio*0.15})`:`rgba(255,255,255,${0.04+ratio*0.1})`;
+    const col=isPos===true?'var(--t)':isPos===false?'var(--re)':'var(--tx)';
+    html+=`<span class="wword" style="font-size:${sz}px;background:${bg};color:${col};opacity:${op};border:1px solid ${isPos===true?'rgba(0,181,163,.15)':isPos===false?'rgba(255,74,74,.15)':'rgba(255,255,255,.08)'};" title="${c} menciones">${w}</span>`;
+  });
+  el.innerHTML=html;
+}
+
+// ── BRAND DIMS ──
+function buildBrandDims(){
+  const el=document.getElementById('brand-dims');
+  const dims=[
+    {icon:'🍺',title:'Cerveza / Portafolio',score:D.global.cal,key:'cal',
+     insight:'Calidad percibida consistente. La cerveza no genera quejas de producto — sí genera detractores por disponibilidad (stock roto) y cobro sorpresa.',
+     detword:'cerveza (17 det)',promword:'cerveza (215 prom)'},
+    {icon:'🍽️',title:'Comida / Alimentos',score:9.2,key:'comida',
+     insight:'Tercer driver de queja en detractores. Problemas: porciones pequeñas, productos no disponibles, opciones vegetarianas ausentes, alas sin sabor.',
+     detword:'comida (15 det)',promword:'comida (190 prom)'},
+    {icon:'💰',title:'Precios',score:8.5,key:'precio',
+     insight:'El precio no es el problema — la sorpresa sí. Cobros no avisados, discrepancias entre carta y cuenta, y cargo de servicio forzado generan 13 detractores directos.',
+     detword:'pagar (7) · cobrar (5) · cuenta (5)',promword:'No mencionado positivamente'},
+    {icon:'🌿',title:'Experiencia / Ambiente',score:D.global.amb,key:'amb',
+     insight:'Dimensión más baja de todas (9.62). Música y baños son los drivers negativos. Cuando está bien, genera los comentarios más efusivos y el mayor NPS.',
+     detword:'música (20 det) · baño (9 det)',promword:'ambiente (441 prom)'},
+    {icon:'⚡',title:'Servicio / Atención',score:D.global.amab,key:'amab',
+     insight:'La dimensión más mencionada en toda la base. "Excelente servicio" es el bigrama más frecuente (254 veces). Cuando falla, es el mayor destructor de NPS.',
+     detword:'servicio (28 det) · mala (9)',promword:'servicio (1024 prom)'},
+    {icon:'📍',title:'Locación / Espacio físico',score:D.global.agil,key:'agil',
+     insight:'"Lugar" y "espacio" son las 5ª y 10ª palabras más frecuentes. Los clientes eligen BBC por su ubicación social y física. Instalaciones deterioradas rompen la expectativa.',
+     detword:'baño (9) · sucio (3) · dañado (4)',promword:'lugar (360) · agradable (193)'},
+  ];
+  el.innerHTML='';
+  dims.forEach(d=>{
+    const c=dc(d.score);
+    const pct=((d.score-7)/3)*100;
+    el.innerHTML+=`<div class="bdim-card">
+      <div class="bdim-icon">${d.icon}</div>
+      <div class="bdim-title">${d.title}</div>
+      <div class="bdim-score" style="color:${c};">${d.score}</div>
+      <div class="bdim-bar"><div class="bdim-bar-fill" style="width:${Math.max(pct,2)}%;background:${c};"></div></div>
+      <div class="bdim-insight">${d.insight}</div>
+      <div style="margin-top:8px;font-family:var(--fm);font-size:9px;color:var(--mu);">
+        <span style="color:var(--t);">+ ${d.promword}</span><br>
+        <span style="color:var(--re);">- ${d.detword}</span>
+      </div>
+    </div>`;
+  });
+}
+
+// ── ZONA DIST ──
+function buildZonaDist(){
+  const el=document.getElementById('zona-dist');
+  if(!el)return;
+  const total=D.global.n;
+  let html='';
+  Object.entries(D.zonas).forEach(([z,zd])=>{
+    const pct=zd.n/total*100;
+    const c=nc(zd.nps);
+    html+=`<div class="hbar-row">
+      <div class="hbar-lbl">${z.replace('Regional ','')}</div>
+      <div class="hbar-n">n=${zd.n.toLocaleString('es')}</div>
+      <div class="hbar-out"><div class="hbar-in" style="width:${Math.max(pct,0.5)}%;background:${c};">${pct.toFixed(1)}%</div></div>
+      <div class="hbar-nps" style="color:${c};">${zd.nps}</div>
+    </div>`;
+  });
+  el.innerHTML=html;
+}
+
+// ── STAFF ──
+function buildStaff(){
+  const posEl=document.getElementById('staff-pos');
+  const negEl=document.getElementById('staff-neg');
+  posEl.innerHTML='';negEl.innerHTML='';
+  D.staff_pos.forEach(s=>{
+    posEl.innerHTML+=`<div class="scard">
+      <div class="scard-top">
+        <span class="scard-name">${s.nombre}</span>
+        <span class="scard-sede">${s.sede}</span>
+        <span class="scard-m bdg bp" style="margin-left:auto;">${s.menciones}× mencionado</span>
+      </div>
+      <div class="scard-quote">"${s.cita}"</div>
+    </div>`;
+  });
+  D.staff_neg.forEach(s=>{
+    const gc=s.gravedad==='URGENTE'||s.gravedad==='CRÍTICO'?'br':s.gravedad==='ALTO'?'by':'bg';
+    negEl.innerHTML+=`<div class="scard neg">
+      <div class="scard-top">
+        <span class="scard-name">${s.nombre}</span>
+        <span class="scard-sede">${s.sede}</span>
+        <span class="scard-m bdg ${gc}" style="margin-left:auto;">${s.gravedad}</span>
+      </div>
+      <div class="scard-quote">"${s.cita}"</div>
+    </div>`;
+  });
+}
+
+// ── TABS ──
+function showTab(id,btn){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('on'));
+  document.querySelectorAll('.navtab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('sec-'+id).classList.add('on');
+  btn.classList.add('on');
+}
+
+// ── INIT ──
+buildZoneCards();
+buildHighlights();
+buildGlobalTrend();
+renderTable();
+buildWordCloud('wc-all',D.words.all,null);
+buildWordCloud('wc-prom',D.words.prom,true);
+buildWordCloud('wc-det',D.words.det,false);
+buildBrandDims();
+buildZonaDist();
+buildStaff();
+</script>
+</body>
+</html>
