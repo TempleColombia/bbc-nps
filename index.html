@@ -256,6 +256,7 @@ table.t tbody tr:last-child td{border-bottom:none;}
     <button class="mchip" onclick="setMes('Julio',this)">Julio 2026</button>
     <button class="mchip on" onclick="setMes('Agosto',this)">Agosto 2026</button>
     <button class="mchip" onclick="setMes('Ambos',this)">Julio + Agosto</button>
+    <button class="mchip" onclick="setMes('Acumulado',this)">Acumulado 2026</button>
 </div>
 
 <!-- NAV TABS -->
@@ -480,6 +481,61 @@ function alertBdg(s){
 
 // ── GET CURRENT DATA ──
 function getData(){
+  if(MES==='Acumulado'){
+    // Merge all months
+    const keys=Object.keys(RAW.meses);
+    let acc=null;
+    for(const k of keys){
+      if(!acc){ acc=JSON.parse(JSON.stringify(RAW.meses[k])); acc.label='Acumulado 2026'; acc.periodo='01 May – 16 Ago 2026'; continue; }
+      const b=RAW.meses[k];
+      // Merge global
+      acc.global=mergeStats(acc.global,b.global);
+      acc.propio=mergeStats(acc.propio,b.propio);
+      acc.franquicia=mergeStats(acc.franquicia,b.franquicia);
+      acc.pub=mergeStats(acc.pub,b.pub);
+      acc.bodega=mergeStats(acc.bodega,b.bodega);
+      // Merge zonas
+      for(const z of Object.keys(b.zonas)){
+        acc.zonas[z]=acc.zonas[z]?mergeStats(acc.zonas[z],b.zonas[z]):b.zonas[z];
+        if(acc.zonas[z]&&b.zonas[z]){
+          acc.zonas[z].propio=mergeStats(acc.zonas[z].propio,b.zonas[z].propio);
+          acc.zonas[z].franquicia=mergeStats(acc.zonas[z].franquicia,b.zonas[z].franquicia);
+          acc.zonas[z].pub=mergeStats(acc.zonas[z].pub,b.zonas[z].pub);
+          acc.zonas[z].bodega=mergeStats(acc.zonas[z].bodega,b.zonas[z].bodega);
+        }
+      }
+      // Merge coordinadores
+      for(const c of Object.keys(b.coordinadores)){
+        acc.coordinadores[c]=acc.coordinadores[c]?mergeStats(acc.coordinadores[c],b.coordinadores[c]):b.coordinadores[c];
+        if(acc.coordinadores[c]) acc.coordinadores[c].zona=b.coordinadores[c].zona;
+      }
+      // Merge sedes
+      const sedeMap={};
+      for(const s of acc.sedes) sedeMap[s.sede]={...s,_n:s.n,_p:s.promotores,_d:s.detractores};
+      for(const s of b.sedes){
+        if(!sedeMap[s.sede]) sedeMap[s.sede]={...s,_n:s.n,_p:s.promotores,_d:s.detractores};
+        else{
+          const e=sedeMap[s.sede];
+          const tn=e._n+s.n,tp=e._p+s.promotores,td=e._d+s.detractores;
+          e.nps=round((tp/tn-td/tn)*100); e.n=tn; e.promotores=tp; e.detractores=td;
+          e.pct_det=round(td/tn*100); e.pct_prom=round(tp/tn*100);
+          e._n=tn; e._p=tp; e._d=td;
+          if(s.comments.length) e.comments=s.comments;
+        }
+      }
+      acc.sedes=Object.values(sedeMap).sort((a,b)=>b.nps-a.nps);
+      // Merge staff and detractors
+      acc.staff_pos=[...acc.staff_pos,...b.staff_pos].filter((v,i,a)=>a.findIndex(x=>x.nombre===v.nombre)===i);
+      acc.staff_neg=[...acc.staff_neg,...b.staff_neg].filter((v,i,a)=>a.findIndex(x=>x.nombre===v.nombre)===i);
+      acc.detractors=[...acc.detractors,...b.detractors];
+      // Use latest dim_comments and words
+      acc.dim_comments=b.dim_comments;
+      acc.words=b.words;
+      // Merge age_dist
+      for(const[k2,v] of Object.entries(b.age_dist)) acc.age_dist[k2]=(acc.age_dist[k2]||0)+v;
+    }
+    return acc;
+  }
   if(MES==='Ambos'){
     // Merge May + June
     // Get last two available months for Ambos
